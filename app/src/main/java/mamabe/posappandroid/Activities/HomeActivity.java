@@ -14,6 +14,8 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setLeftIcon(R.drawable.ic_exit_to_app_white_24dp);
+        setActionBarTitleCenter("mamabe");
     }
 
     @Override
@@ -22,6 +24,7 @@ public class HomeActivity extends BaseActivity {
         toolbar.setContentInsetsAbsolute(0, 0);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
     }
 
     @Override
@@ -31,7 +34,7 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public int getLayout() {
-        return R.layout.activity_home;
+        return R.layout.activity_home_admin;
     }
 
     @Override

@@ -126,7 +126,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
 
 
 
-            actionBarView.setBackgroundResource(R.color.actionbar_color);
+            actionBarView.setBackgroundResource(R.color.actionBarColor);
 
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             actionBar.setDisplayShowHomeEnabled(false);
@@ -212,7 +212,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
     public void setDefaultActionbarIcon() {
         rightIcon.setVisibility(View.VISIBLE);
         actionRightContainer.setVisibility(View.VISIBLE);
-        primaryLogo.setVisibility(View.VISIBLE);
+//        primaryLogo.setVisibility(View.VISIBLE);
         tvActionBarTitle.setVisibility(View.GONE);
 //        setRightIcon(R.drawable.logoclock);
     }

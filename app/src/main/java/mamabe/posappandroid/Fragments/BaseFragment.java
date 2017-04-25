@@ -13,7 +13,7 @@ import mamabe.posappandroid.Base.FragmentInterface;
 
 
 /**
- * Created by dede_eko on 7/1/15.
+ * Created by dede_eko on 7/1/17.
  */
 public abstract class BaseFragment extends Fragment implements FragmentInterface {
     protected Activity activity;

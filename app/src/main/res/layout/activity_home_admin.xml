@@ -31,7 +31,7 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/btn_inventory"
+        android:id="@+id/btn_expend"
         android:layout_width="360dp"
         android:layout_height="0dp"
         android:background="@drawable/border_brown"
@@ -101,7 +101,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btn_setting"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_inventory"
+        app:layout_constraintTop_toBottomOf="@+id/btn_expend"
         app:layout_constraintVertical_chainStyle="packed">
 
         <ImageView
@@ -219,7 +219,7 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingTop="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_inventory"
+        app:layout_constraintBottom_toTopOf="@+id/btn_expend"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

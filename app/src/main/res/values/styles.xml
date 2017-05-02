@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/orange6</item>
         <item name="colorPrimaryDark">#85471E</item>
-        <item name="colorAccent">@color/myDarkBg</item>
+        <item name="colorAccent">@color/grey_font</item>
     </style>
 
     <style name="ActionBarThemeOverlay" parent="">

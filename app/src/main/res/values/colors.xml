@@ -149,4 +149,6 @@
 
     <color name="brown">#85471E</color>
     <color name="softbrown">#FFE9B3</color>
+    <color name="softbrownARGB">#88FFE9B3</color>
+
 </resources>

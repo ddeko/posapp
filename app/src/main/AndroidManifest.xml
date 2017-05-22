@@ -21,7 +21,8 @@
         </activity>
         <activity android:name=".Activities.HomeActivity" />
         <activity android:name=".Activities.SettingActivity" />
-        <activity android:name=".Activities.UserSettingActivity"></activity>
+        <activity android:name=".Activities.UserSettingActivity" />
+        <activity android:name=".Activities.PaymentSettingActivity"></activity>
     </application>
 
 </manifest>

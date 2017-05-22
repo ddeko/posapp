@@ -1,0 +1,27 @@
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/food00" android:duration="90" />
+    <item android:drawable="@drawable/food01" android:duration="90" />
+    <item android:drawable="@drawable/food02" android:duration="90" />
+    <item android:drawable="@drawable/food03" android:duration="90" />
+    <item android:drawable="@drawable/food04" android:duration="90" />
+    <item android:drawable="@drawable/food05" android:duration="90" />
+    <item android:drawable="@drawable/food06" android:duration="90" />
+    <item android:drawable="@drawable/food07" android:duration="90" />
+    <item android:drawable="@drawable/food08" android:duration="90" />
+    <item android:drawable="@drawable/food09" android:duration="90" />
+    <item android:drawable="@drawable/food10" android:duration="90" />
+    <item android:drawable="@drawable/food11" android:duration="90" />
+    <item android:drawable="@drawable/food12" android:duration="90" />
+    <item android:drawable="@drawable/food13" android:duration="90" />
+    <item android:drawable="@drawable/food14" android:duration="90" />
+    <item android:drawable="@drawable/food15" android:duration="90" />
+    <item android:drawable="@drawable/food16" android:duration="90" />
+    <item android:drawable="@drawable/food17" android:duration="90" />
+    <item android:drawable="@drawable/food18" android:duration="90" />
+    <item android:drawable="@drawable/food19" android:duration="90" />
+    <item android:drawable="@drawable/food20" android:duration="90" />
+    <item android:drawable="@drawable/food21" android:duration="90" />
+    <item android:drawable="@drawable/food22" android:duration="90" />
+    <item android:drawable="@drawable/food23" android:duration="90" />
+    <item android:drawable="@drawable/food24" android:duration="90" />
+</animation-list>

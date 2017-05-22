@@ -14,4 +14,9 @@
         <item name="colorControlHighlight">#3fff</item>
     </style>
 
+    <style name="popup_animation">
+        <item name="android:windowEnterAnimation">@anim/popup_animation_enter</item>
+        <item name="android:windowExitAnimation">@anim/popup_animation_exit</item>
+    </style>
+
 </resources>

@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 
+import mamabe.posappandroid.APIs.API;
+import mamabe.posappandroid.APIs.ServiceGenerator;
 import mamabe.posappandroid.Base.ActivityInterface;
 import mamabe.posappandroid.Callbacks.OnActionbarListener;
 import mamabe.posappandroid.Fragments.BaseFragment;
@@ -55,6 +58,8 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
     private LinearLayout primaryLogo;
     private LinearLayout leftContainer;
 
+    private ProgressBar loading;
+
     private View actionRight;
     private View actionLeft;
 
@@ -63,17 +68,19 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
 
     protected static boolean isVisible = false;
 
+    public API api = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         context = this;
-
+        api = ServiceGenerator.createService(API.class);
         setContentView(getLayout());
         initView();
         setUICallbacks();
         showCustomActionBar();
-        tvActionBarTitleCenter.setText("MyQueue");
+//        tvActionBarTitleCenter.setText("MyQueue");
 
         //GCM Listener
         //GCMManager.getInstance(this).registerListener(this);
@@ -104,6 +111,8 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
         super.onDestroy();
         setVisible(false);
     }
+
+
 
     protected void showCustomActionBar() {
         ActionBar actionBar = getSupportActionBar();
@@ -167,6 +176,20 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
             leftIcon.setVisibility(drawableRes == 0 ? View.GONE : View.VISIBLE);
             leftContainer.setVisibility(drawableRes == 0 ? View.GONE : View.VISIBLE);
             leftIcon.setImageResource(drawableRes);
+        }
+    }
+
+    public void showLoading(boolean a){
+
+        loading = (ProgressBar) findViewById(R.id.loading);
+        loading.setVisibility(View.GONE);
+
+        if(a == true)
+        {
+            loading.setVisibility(View.VISIBLE);
+        }
+        else{
+            loading.setVisibility(View.GONE);
         }
     }
 

@@ -45,6 +45,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
         btnReport.setOnClickListener(this);
         btnSetting.setOnClickListener(this);
 
+        showLoading(false);
+
     }
 
     @Override

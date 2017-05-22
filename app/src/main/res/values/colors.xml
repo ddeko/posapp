@@ -151,4 +151,7 @@
     <color name="softbrown">#FFE9B3</color>
     <color name="softbrownARGB">#88FFE9B3</color>
 
+    <color name="separator">#5585471E</color>
+    <color name="background_dim">#66000000</color>
+
 </resources>

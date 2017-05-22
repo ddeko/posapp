@@ -63,7 +63,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         }
         else if(v ==btnPayment)
         {
-
+            Intent i = new Intent(SettingActivity.this, PaymentSettingActivity.class);
+            startActivity(i);
         }
         else if(v ==btnInvent)
         {

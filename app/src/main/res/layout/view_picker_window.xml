@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/softbrown">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/actionbar_color"
+        android:gravity="center_vertical" >
+
+        <LinearLayout
+            android:id="@+id/view_picker_window_buttons_header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            android:layout_toLeftOf="@+id/view_picker_window_done"
+            android:visibility="visible" >
+
+            <TextView
+                android:id="@+id/view_picker_window_button_a"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Button A"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@drawable/selector_button_blank_no_corners" />
+
+            <TextView
+                android:id="@+id/view_picker_window_button_b"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Button B"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@drawable/selector_button_blank_no_corners" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/view_picker_window_default_header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="15dp"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            android:layout_toLeftOf="@+id/view_picker_window_done"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/view_picker_window_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="title"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/view_picker_window_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="title"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!--<ImageView
+            android:id="@+id/view_picker_window_done"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:text="X"
+            android:paddingLeft="15dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingRight="15dp"
+            android:background="@drawable/selector_button_blank_no_corners"
+            android:src="@drawable/done" />-->
+
+        <Button
+            android:id="@+id/view_picker_window_btn_done"
+            android:layout_width="75dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/transparent"
+            android:paddingLeft="15dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingRight="15dp"
+            android:text="done"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="18sp" />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/separator" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="@color/softbrown">
+
+        <ListView
+            android:id="@+id/view_picker_window_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:choiceMode="singleChoice"
+            android:divider="@color/separator"
+            android:drawSelectorOnTop="true"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/view_picker_window_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Notification"
+            android:textColor="@color/actionbar_color"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+        <android.support.design.widget.FloatingActionButton
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/view_picker_floating_action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="32dp"
+            android:clickable="true"
+            android:tint="@color/white"
+            app:backgroundTint="@color/brown"
+            app:fabSize="mini"
+            android:src="@drawable/ic_add_black_24dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

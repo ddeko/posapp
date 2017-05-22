@@ -32,7 +32,7 @@
 
     <RelativeLayout
         android:id="@+id/btn_expend"
-        android:layout_width="360dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/border_brown"
         android:paddingBottom="12dp"
@@ -91,7 +91,7 @@
 
     <RelativeLayout
         android:id="@+id/btn_report"
-        android:layout_width="360dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/border_brown"
         android:paddingBottom="12dp"
@@ -150,14 +150,13 @@
 
     <RelativeLayout
         android:id="@+id/btn_setting"
-        android:layout_width="360dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/border_brown"
         android:paddingBottom="12dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingTop="12dp"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_report"
@@ -212,7 +211,7 @@
 
     <RelativeLayout
         android:id="@+id/btn_order_admin"
-        android:layout_width="360dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/border_brown"
         android:paddingBottom="12dp"
@@ -220,7 +219,6 @@
         android:paddingRight="16dp"
         android:paddingTop="12dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_expend"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top_nav_bar_layout">
@@ -271,16 +269,16 @@
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
-        android:layout_width="360dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
         android:background="@color/actionBarColor"
         android:paddingBottom="4dp"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
         android:paddingTop="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
 
         <TextView
             android:id="@+id/tv_name"
@@ -302,5 +300,26 @@
             android:textSize="18sp" />
 
     </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="192dp"
+        android:layout_height="48dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="0dp"
+        android:foregroundGravity="center"
+        android:indeterminateDrawable="@drawable/loading"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/top_nav_bar_layout"
+        app:layout_constraintVertical_bias="0.5"
+        tools:visibility="gone" />
 
 </android.support.constraint.ConstraintLayout>

@@ -44,4 +44,25 @@
 
     </FrameLayout>
 
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="192dp"
+        android:layout_height="48dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="0dp"
+        android:foregroundGravity="center"
+        android:indeterminateDrawable="@drawable/loading"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/top_nav_bar_layout"
+        app:layout_constraintVertical_bias="0.5"
+        tools:visibility="gone" />
+
 </android.support.constraint.ConstraintLayout>

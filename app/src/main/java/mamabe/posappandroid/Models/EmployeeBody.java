@@ -13,7 +13,9 @@ public class EmployeeBody implements Serializable {
     private String emp_name;
     private String address;
     private String phone;
-    private int role_id;
+    private String role_name;
+    private String emp_status;
+    private String change_username;
 
     public String getEmp_id() {
         return emp_id;
@@ -63,11 +65,28 @@ public class EmployeeBody implements Serializable {
         this.phone = phone;
     }
 
-    public int getRole_id() {
-        return role_id;
+    public String getRole_name() {
+        return role_name;
     }
 
-    public void setRole_id(int role_id) {
-        this.role_id = role_id;
+    public void setRole_name(String role_name) {
+        this.role_name = role_name;
+    }
+
+    public String getChange_username() {
+        return change_username;
+    }
+
+    public void setChange_username(String change_username) {
+        this.change_username = change_username;
+    }
+
+    public String getEmp_status() {
+
+        return emp_status;
+    }
+
+    public void setEmp_status(String emp_status) {
+        this.emp_status = emp_status;
     }
 }

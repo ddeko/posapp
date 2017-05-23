@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 public class EmployeePostResponse implements Serializable {
 
-    @SerializedName("lastId")
+    @SerializedName("count")
     @Expose
     private String lastId;
     @SerializedName("status")

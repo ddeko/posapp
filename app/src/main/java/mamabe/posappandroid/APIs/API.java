@@ -24,6 +24,13 @@ public interface API {
     Call<EmployeePostResponse>
     postEmployee(@Body EmployeeBody employeeBody);
 
+    @POST("updateEmployee")
+    Call<EmployeePostResponse>
+    updateEmployee(@Body EmployeeBody employeeBody);
+
+    @POST("deleteEmployee")
+    Call<EmployeePostResponse>
+    deleteEmployee(@Body EmployeeBody employeeBody);
 
     //Role
     @GET("getAllRole")

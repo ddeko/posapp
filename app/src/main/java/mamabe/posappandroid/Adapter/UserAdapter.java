@@ -3,6 +3,8 @@ package mamabe.posappandroid.Adapter;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 import mamabe.posappandroid.Activities.UserSettingActivity;
+import mamabe.posappandroid.Fragments.Dialogs.ChangePasswordDialog;
 import mamabe.posappandroid.Fragments.Pickerview.RolePicker;
 import mamabe.posappandroid.Fragments.UserFragment;
 import mamabe.posappandroid.Models.Employee;
@@ -37,6 +40,7 @@ import retrofit2.Response;
 public class UserAdapter extends RecyclerView.Adapter{
 
     ArrayList<Employee> userList;
+    ArrayList<Employee> userListTemp;
 
     private Context context;
     private UserSettingActivity activity;
@@ -44,6 +48,7 @@ public class UserAdapter extends RecyclerView.Adapter{
     private UserAdapterListener listener;
 
     private RolePicker rolePicker;
+    private ChangePasswordDialog changePasswordDialog;
 
     private String selectedRole;
     private String idRole;
@@ -53,6 +58,7 @@ public class UserAdapter extends RecyclerView.Adapter{
         void onSave(int position);
         void onDelete(int position);
         void onLoading();
+        void onPasswordClick(int position);
     }
 
     public UserAdapter(ArrayList<Employee> userList, UserAdapterListener listener, Context context, UserSettingActivity activity
@@ -88,13 +94,14 @@ public class UserAdapter extends RecyclerView.Adapter{
             @Override
             protected String lastSelectedProvince() {
                 selectedRole = etRole.getText().toString();
-                Toast.makeText(activity.getApplicationContext(), selectedRole, Toast.LENGTH_SHORT).show();
 
                 return selectedRole;
             }
         };
 
-        return  new ViewHolder(v, btnDeleteUser, btnSaveUser, etNama, etUser, etAddress, etPhone, etRole, etPassword, rolePicker);
+
+
+        return  new ViewHolder(v, btnDeleteUser, btnSaveUser, etNama, etUser, etAddress, etPhone, etRole, etPassword, rolePicker, changePasswordDialog);
     }
 
     @Override
@@ -102,6 +109,21 @@ public class UserAdapter extends RecyclerView.Adapter{
 
         final ViewHolder v = (ViewHolder) holder;
         final Employee user = userList.get(position);
+
+        userListTemp=userList;
+
+        final Employee userTemp = userListTemp.get(position);
+
+        if(position==0&& user.getRoleId().equalsIgnoreCase("1"))
+        {
+            v.btnSaveUser.setVisibility(View.GONE);
+            v.btnDeleteUser.setVisibility(View.GONE);
+        }
+        else
+        {
+            v.btnSaveUser.setVisibility(View.VISIBLE);
+            v.btnDeleteUser.setVisibility(View.VISIBLE);
+        }
 
         v.etNama.setText(user.getEmpName());
         v.etUser.setText(user.getUsername());
@@ -112,6 +134,22 @@ public class UserAdapter extends RecyclerView.Adapter{
 
 
 
+
+        v.etPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                user.setEmpName(v.etNama.getText().toString());
+                user.setUsername(v.etUser.getText().toString());
+                user.setAddress(v.etAddress.getText().toString());
+                user.setPhone(v.etPhone.getText().toString());
+                user.setRoleName(v.etRole.getText().toString());
+
+                if (listener != null)
+                    listener.onPasswordClick(position);
+
+            }
+        });
+
         v.etRole.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -119,8 +157,6 @@ public class UserAdapter extends RecyclerView.Adapter{
                 v.rp.show(view);
             }
         });
-
-
 
         v.btnSaveUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,7 +169,7 @@ public class UserAdapter extends RecyclerView.Adapter{
                 employeeBody.setEmp_name(v.etNama.getText().toString());
                 employeeBody.setAddress(v.etAddress.getText().toString());
                 employeeBody.setPhone(v.etPhone.getText().toString());
-                employeeBody.setRole_id(3);
+                employeeBody.setRole_name(v.etRole.getText().toString());
 
                 if(v.etUser.getText().toString().equalsIgnoreCase(""))
                 {
@@ -156,12 +192,21 @@ public class UserAdapter extends RecyclerView.Adapter{
                 else{
                     if (listener != null)
                         listener.onLoading();
-                    if(user.getEmpId().equalsIgnoreCase(""))
+                    if(user.getEmpId()==null)
                     {
                         insertData(employeeBody, v.getAdapterPosition());
                     }
                     else {
-                        Toast.makeText(activity.getApplicationContext(), "update", Toast.LENGTH_SHORT).show();
+
+                        if(userTemp.getUsername().equals(employeeBody.getUsername()))
+                        {
+                            employeeBody.setChange_username("0");
+                        }else
+                        {
+                            employeeBody.setChange_username("1");
+                        }
+                        employeeBody.setEmp_id(user.getEmpId());
+                        updateData(employeeBody, v.getAdapterPosition());
                     }
 
                 }
@@ -169,8 +214,61 @@ public class UserAdapter extends RecyclerView.Adapter{
 
             }
         });
-    }
 
+        v.btnDeleteUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EmployeeBody employeeBody = new EmployeeBody();
+
+                employeeBody.setEmp_id(user.getEmpId());
+                employeeBody.setEmp_status("0");
+
+                deleteData(employeeBody, v.getAdapterPosition());
+
+            }
+        });
+    }
+    public void updateData(final EmployeeBody employeeBody,final int position){
+        activity.showLoading(true);
+        Call<EmployeePostResponse> call = null;
+
+        call = activity.api.updateEmployee(employeeBody);
+        call.enqueue(new Callback<EmployeePostResponse>() {
+            @Override
+            public void onResponse(Call<EmployeePostResponse> call, Response<EmployeePostResponse> response) {
+
+                if (201 == response.code()) {
+
+                    final EmployeePostResponse postResponse = response.body();
+
+                    Log.d("UserFragment", "response = " + new Gson().toJson(postResponse));
+
+                    if(postResponse.getStatus()==0)
+                    {
+                        Toast.makeText(activity.getApplicationContext(), "Username is already in use", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        if (listener != null)
+                            listener.onSave(position);
+                    }
+                    activity.showLoading(false);
+
+                } else {
+                    Toast.makeText(activity.getApplicationContext(), "Cannot update data", Toast.LENGTH_SHORT).show();
+                    activity.showLoading(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EmployeePostResponse> call, Throwable t) {
+                Toast.makeText(activity.getApplicationContext(), "Failed update data", Toast.LENGTH_SHORT).show();
+                activity.showLoading(false);
+            }
+
+        });
+
+    }
 
     public void insertData(final EmployeeBody employeeBody,final int position){
         activity.showLoading(true);
@@ -214,6 +312,42 @@ public class UserAdapter extends RecyclerView.Adapter{
 
     }
 
+    public void deleteData(final EmployeeBody employeeBody,final int position){
+        activity.showLoading(true);
+        Call<EmployeePostResponse> call = null;
+
+        call = activity.api.deleteEmployee(employeeBody);
+        call.enqueue(new Callback<EmployeePostResponse>() {
+            @Override
+            public void onResponse(Call<EmployeePostResponse> call, Response<EmployeePostResponse> response) {
+
+                if (201 == response.code()) {
+
+                    final EmployeePostResponse postResponse = response.body();
+
+                    Log.d("UserFragment", "response = " + new Gson().toJson(postResponse));
+
+
+                    if (listener != null)
+                        listener.onDelete(position);
+
+                    activity.showLoading(false);
+
+                } else {
+                    Toast.makeText(activity.getApplicationContext(), "Cannot delete data", Toast.LENGTH_SHORT).show();
+                    activity.showLoading(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EmployeePostResponse> call, Throwable t) {
+                Toast.makeText(activity.getApplicationContext(), "Failed delete data", Toast.LENGTH_SHORT).show();
+                activity.showLoading(false);
+            }
+
+        });
+    }
+
 
     @Override
     public int getItemCount() {
@@ -231,9 +365,10 @@ public class UserAdapter extends RecyclerView.Adapter{
         public EditText etRole;
         public EditText etPassword;
         public RolePicker rp;
+        public ChangePasswordDialog cpd;
 
         public ViewHolder(View itemView, ImageButton btnDeleteUser, ImageButton btnSaveUser, EditText etNama,
-                          EditText etUser, EditText etAddress, EditText etPhone, EditText etRole, EditText etPassword, RolePicker rp) {
+                          EditText etUser, EditText etAddress, EditText etPhone, EditText etRole, EditText etPassword, RolePicker rp, ChangePasswordDialog cpd) {
             super(itemView);
             this.btnDeleteUser = btnDeleteUser;
             this.btnSaveUser = btnSaveUser;
@@ -244,6 +379,7 @@ public class UserAdapter extends RecyclerView.Adapter{
             this.etRole = etRole;
             this.etPassword = etPassword;
             this.rp = rp;
+            this.cpd = cpd;
         }
 
     }

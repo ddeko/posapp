@@ -18,6 +18,7 @@ import java.util.List;
 import mamabe.posappandroid.Activities.UserSettingActivity;
 import mamabe.posappandroid.Adapter.UserAdapter;
 import mamabe.posappandroid.Callbacks.OnActionbarListener;
+import mamabe.posappandroid.Fragments.Dialogs.ChangePasswordDialog;
 import mamabe.posappandroid.Models.Employee;
 import mamabe.posappandroid.Models.EmployeeBody;
 import mamabe.posappandroid.Models.EmployeePostResponse;
@@ -31,7 +32,7 @@ import retrofit2.Response;
  * Created by DedeEko on 5/2/2017.
  */
 
-public class UserFragment extends BaseFragment implements View.OnClickListener, UserAdapter.UserAdapterListener{
+public class UserFragment extends BaseFragment implements View.OnClickListener, UserAdapter.UserAdapterListener, ChangePasswordDialog.ChangePasswordListener{
 
     UserSettingActivity activity;
     dummyFragment dummyFragment;
@@ -42,6 +43,8 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
     private RelativeLayout btnAddUser;
 
     private ArrayList<Employee> listUser;
+
+    private int lastposition;
 
 //    private ProgressDialog nDialog;
 
@@ -226,17 +229,33 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
     @Override
     public void onSave(int position) {
         fetchData();
-        Toast.makeText(activity.getApplicationContext(), "Cannot adsaadsad", Toast.LENGTH_SHORT).show();
         activity.showLoading(false);
     }
 
     @Override
     public void onDelete(int position) {
-
+        fetchData();
+        recyclerView.scrollToPosition(position-1);
+        activity.showLoading(false);
     }
 
     @Override
     public void onLoading() {
         activity.showLoading(true);
+    }
+
+    @Override
+    public void onPasswordClick(int position) {
+        lastposition = position;
+        Employee user = listUser.get(position);
+        ChangePasswordDialog changePasswordDialog = new ChangePasswordDialog(user.getPassword(),user.getEmpId(),activity.getApplicationContext(),this );
+        changePasswordDialog.show(activity.getSupportFragmentManager(), null);
+    }
+
+    @Override
+    public void onChangeDone(String password) {
+        listUser.get(lastposition).setPassword(password);
+        adapter.notifyDataSetChanged();
+        recyclerView.scrollToPosition(lastposition);
     }
 }

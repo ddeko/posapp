@@ -1,8 +1,6 @@
 package mamabe.posappandroid.Fragments;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,8 +18,6 @@ import mamabe.posappandroid.Adapter.UserAdapter;
 import mamabe.posappandroid.Callbacks.OnActionbarListener;
 import mamabe.posappandroid.Fragments.Dialogs.ChangePasswordDialog;
 import mamabe.posappandroid.Models.Employee;
-import mamabe.posappandroid.Models.EmployeeBody;
-import mamabe.posappandroid.Models.EmployeePostResponse;
 import mamabe.posappandroid.Models.EmployeeResponse;
 import mamabe.posappandroid.R;
 import retrofit2.Call;

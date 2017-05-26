@@ -5,6 +5,9 @@ import mamabe.posappandroid.Models.EmployeeBody;
 import mamabe.posappandroid.Models.EmployeePostResponse;
 import mamabe.posappandroid.Models.EmployeeResponse;
 import mamabe.posappandroid.Models.RoleResponse;
+import mamabe.posappandroid.Models.Setting;
+import mamabe.posappandroid.Models.SettingPostResponse;
+import mamabe.posappandroid.Models.SettingResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -36,6 +39,16 @@ public interface API {
     @GET("getAllRole")
     Call<RoleResponse>
     getRoleList();
+
+    //Setting
+    @GET("getSetting")
+    Call<SettingResponse>
+    getSetting();
+
+    @POST("updateSetting")
+    Call<SettingPostResponse>
+    updateSetting(@Body Setting Setting);
+
 
 //    //Penyakit
 //    @GET("penyakitall/{page}/{count_page}")

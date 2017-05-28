@@ -1,28 +1,28 @@
 package mamabe.posappandroid.Activities;
 
-import android.app.ProgressDialog;
+
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import mamabe.posappandroid.Callbacks.OnActionbarListener;
-import mamabe.posappandroid.Fragments.UserFragment;
+import mamabe.posappandroid.Fragments.MenuFragment;
 import mamabe.posappandroid.R;
 
-public class UserSettingActivity extends BaseActivity {
+public class MenuSettingActivity extends BaseActivity {
 
-    UserFragment userFragment;
+    MenuFragment menuFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setRightIcon(R.drawable.usersetting);
+
+        setRightIcon(R.drawable.menu);
         setLeftIcon(R.drawable.back);
-        setActionBarTitle("User Setting");
+        setActionBarTitle("Menu Setting");
 
-        userFragment = new UserFragment();
+        menuFragment = new MenuFragment();
 
-        replaceFragment(R.id.fragment_container, userFragment, false);
+        replaceFragment(R.id.fragment_container, menuFragment, false);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class UserSettingActivity extends BaseActivity {
 
     @Override
     public int getLayout() {
-        return R.layout.activity_user_setting;
+        return R.layout.activity_menu_setting;
     }
 
     @Override
@@ -64,6 +64,6 @@ public class UserSettingActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        userFragment.run();
+        menuFragment.run();
     }
 }

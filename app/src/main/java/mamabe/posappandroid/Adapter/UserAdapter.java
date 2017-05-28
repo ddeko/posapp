@@ -118,11 +118,23 @@ public class UserAdapter extends RecyclerView.Adapter{
         {
             v.btnSaveUser.setVisibility(View.GONE);
             v.btnDeleteUser.setVisibility(View.GONE);
+            v.etNama.setEnabled(false);
+            v.etUser.setEnabled(false);
+            v.etAddress.setEnabled(false);
+            v.etPhone.setEnabled(false);
+            v.etRole.setEnabled(false);
+            v.etPassword.setEnabled(false);
         }
         else
         {
             v.btnSaveUser.setVisibility(View.VISIBLE);
             v.btnDeleteUser.setVisibility(View.VISIBLE);
+            v.etNama.setEnabled(true);
+            v.etUser.setEnabled(true);
+            v.etAddress.setEnabled(true);
+            v.etPhone.setEnabled(true);
+            v.etRole.setEnabled(true);
+            v.etPassword.setEnabled(true);
         }
 
         v.etNama.setText(user.getEmpName());
@@ -131,8 +143,6 @@ public class UserAdapter extends RecyclerView.Adapter{
         v.etPhone.setText(user.getPhone());
         v.etRole.setText(user.getRoleName());
         v.etPassword.setText(user.getPassword());
-
-
 
 
         v.etPassword.setOnClickListener(new View.OnClickListener() {

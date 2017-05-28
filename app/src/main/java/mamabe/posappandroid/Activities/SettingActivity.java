@@ -72,7 +72,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         }
         else if(v ==btnMenu)
         {
-
+            Intent i = new Intent(SettingActivity.this, MenuSettingActivity.class);
+            startActivity(i);
         }
     }
 }

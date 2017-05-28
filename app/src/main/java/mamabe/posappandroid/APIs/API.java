@@ -4,6 +4,7 @@ package mamabe.posappandroid.APIs;
 import mamabe.posappandroid.Models.EmployeeBody;
 import mamabe.posappandroid.Models.EmployeePostResponse;
 import mamabe.posappandroid.Models.EmployeeResponse;
+import mamabe.posappandroid.Models.MenuCategoryResponse;
 import mamabe.posappandroid.Models.RoleResponse;
 import mamabe.posappandroid.Models.Setting;
 import mamabe.posappandroid.Models.SettingPostResponse;
@@ -12,6 +13,9 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by DedeEko on 5/18/2016.
@@ -48,6 +52,16 @@ public interface API {
     @POST("updateSetting")
     Call<SettingPostResponse>
     updateSetting(@Body Setting Setting);
+
+    //Menu Category
+    @GET("getMenuCategory")
+    Call<MenuCategoryResponse>
+    getMenuCategory(@Query("menu_type") String menu_type);
+
+    @GET("getMenuType")
+    Call<MenuCategoryResponse>
+    getMenuType();
+
 
 
 //    //Penyakit

@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import mamabe.posappandroid.Callbacks.OnActionbarListener;
+import mamabe.posappandroid.Fragments.DummyFragment;
 import mamabe.posappandroid.Fragments.MenuFragment;
 import mamabe.posappandroid.R;
 
 public class MenuSettingActivity extends BaseActivity {
 
     MenuFragment menuFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,8 @@ public class MenuSettingActivity extends BaseActivity {
         menuFragment = new MenuFragment();
 
         replaceFragment(R.id.fragment_container, menuFragment, false);
+
+
     }
 
     @Override
@@ -42,11 +46,11 @@ public class MenuSettingActivity extends BaseActivity {
             public void onLeftIconClick() {
                 onBackPressed();
 
+
             }
 
             @Override
             public void onRightIconClick() {
-
             }
         });
     }
@@ -64,6 +68,7 @@ public class MenuSettingActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
         menuFragment.run();
     }
 }

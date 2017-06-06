@@ -31,7 +31,7 @@ import retrofit2.Response;
 public class UserFragment extends BaseFragment implements View.OnClickListener, UserAdapter.UserAdapterListener, ChangePasswordDialog.ChangePasswordListener{
 
     UserSettingActivity activity;
-    dummyFragment dummyFragment;
+    DummyFragment DummyFragment;
 
     private UserAdapter adapter;
 

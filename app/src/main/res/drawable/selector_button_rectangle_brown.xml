@@ -7,7 +7,7 @@
 
         <shape>
 
-            <solid android:color="@color/green2" />
+            <solid android:color="@color/brown" />
 
             <padding
                 android:left="1dp"
@@ -23,7 +23,7 @@
 
         <shape>
 
-            <solid android:color="@color/green3" />
+            <solid android:color="#5c2f10" />
 
             <padding
                 android:left="1dp"

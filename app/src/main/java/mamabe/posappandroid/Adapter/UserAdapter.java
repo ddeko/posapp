@@ -143,6 +143,7 @@ public class UserAdapter extends RecyclerView.Adapter{
         v.etPhone.setText(user.getPhone());
         v.etRole.setText(user.getRoleName());
         v.etPassword.setText(user.getPassword());
+        selectedRole = v.etRole.getText().toString();
 
 
         v.etPassword.setOnClickListener(new View.OnClickListener() {

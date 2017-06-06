@@ -4,7 +4,10 @@ package mamabe.posappandroid.APIs;
 import mamabe.posappandroid.Models.EmployeeBody;
 import mamabe.posappandroid.Models.EmployeePostResponse;
 import mamabe.posappandroid.Models.EmployeeResponse;
+import mamabe.posappandroid.Models.MenuBody;
 import mamabe.posappandroid.Models.MenuCategoryResponse;
+import mamabe.posappandroid.Models.MenuPostResponse;
+import mamabe.posappandroid.Models.MenuResponse;
 import mamabe.posappandroid.Models.RoleResponse;
 import mamabe.posappandroid.Models.Setting;
 import mamabe.posappandroid.Models.SettingPostResponse;
@@ -62,7 +65,23 @@ public interface API {
     Call<MenuCategoryResponse>
     getMenuType();
 
+    //Menu
+    @GET("getMenuBy")
+    Call<MenuResponse>
+    getMenuBy(@Query("menu_type") String menu_type,
+              @Query("menuCategory_name") String menuCategory_name);
 
+    @POST("insertMenu")
+    Call<MenuPostResponse>
+    postMenu(@Body MenuBody menuBody);
+
+    @POST("updateMenu")
+    Call<MenuPostResponse>
+    updateMenu(@Body MenuBody menuBody);
+
+    @POST("deleteMenu")
+    Call<MenuPostResponse>
+    deleteMenu(@Body MenuBody menuBody);
 
 //    //Penyakit
 //    @GET("penyakitall/{page}/{count_page}")

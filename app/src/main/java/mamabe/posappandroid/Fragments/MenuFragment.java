@@ -15,11 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mamabe.posappandroid.Activities.MenuSettingActivity;
+import mamabe.posappandroid.Adapter.MenuAdapter;
 import mamabe.posappandroid.Adapter.MenuCategoryAdapter;
 import mamabe.posappandroid.Adapter.MenuCategoryTypeAdapter;
 import mamabe.posappandroid.Callbacks.OnActionbarListener;
+import mamabe.posappandroid.Models.Menu;
 import mamabe.posappandroid.Models.MenuCategory;
 import mamabe.posappandroid.Models.MenuCategoryResponse;
+import mamabe.posappandroid.Models.MenuResponse;
 import mamabe.posappandroid.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,15 +33,22 @@ import retrofit2.Response;
  */
 
 public class MenuFragment extends BaseFragment implements View.OnClickListener, MenuCategoryAdapter.MenuCategoryAdapterListener
-                                                            , MenuCategoryTypeAdapter.MenuTypeAdapterListener{
+                                                            , MenuCategoryTypeAdapter.MenuTypeAdapterListener
+                                                            , MenuAdapter.MenuAdapterListener{
+
+    public static final int ADDMENUFRAGMENT_ADD_REQUEST_CODE = 1;
+    public static final int ADDMENUFRAGMENT_UPDATE_REQUEST_CODE = 2;
 
     MenuSettingActivity activity;
+    AddMenuFragment addMenuFragment;
 
+    private MenuAdapter adapterMenu;
     private MenuCategoryAdapter adapterCategory;
     private MenuCategoryTypeAdapter adapterType;
 
     private ArrayList<MenuCategory> menuCategoryList;
     private ArrayList<MenuCategory> menuTypeList;
+    private ArrayList<Menu> menuList;
 
     private RecyclerView recyclerCategoryType;
     private RecyclerView recyclerCategory;
@@ -53,9 +63,13 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener, 
 
         menuCategoryList = new ArrayList<>();
         menuTypeList = new ArrayList<>();
+        menuList = new ArrayList<>();
+
+
 
         adapterCategory = new MenuCategoryAdapter(menuCategoryList, this, activity.getApplicationContext(), activity, this);
         adapterType = new MenuCategoryTypeAdapter(menuTypeList, this, activity.getApplicationContext(), activity, this);
+        adapterMenu = new MenuAdapter(menuList, this, activity);
     }
 
     private void setupActionBar() {
@@ -82,9 +96,11 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener, 
 
         adapterCategory = new MenuCategoryAdapter(menuCategoryList, this, activity.getApplicationContext(), activity, this);
         adapterType = new MenuCategoryTypeAdapter(menuTypeList, this, activity.getApplicationContext(), activity, this);
+        adapterMenu = new MenuAdapter(menuList, this, activity);
 
         recyclerCategory.setAdapter(adapterCategory);
         recyclerCategoryType.setAdapter(adapterType);
+        recyclerMenu.setAdapter(adapterMenu);
 
         btnAddMenu.setOnClickListener(this);
 
@@ -127,6 +143,7 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener, 
     public void onResume() {
         super.onResume();
         updateUI();
+        fetchData();
     }
 
     @Override
@@ -147,6 +164,18 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener, 
     @Override
     public void onClick(View view) {
 
+        if(view==btnAddMenu)
+        {
+            addMenuFragment = new AddMenuFragment();
+
+            Bundle b = new Bundle();
+
+            b.putInt("request_code",ADDMENUFRAGMENT_ADD_REQUEST_CODE);
+            addMenuFragment.setArguments(b);
+
+            replaceFragment(R.id.fragment_container, addMenuFragment, true);
+
+        }
     }
 
     public void fetchData(){
@@ -175,6 +204,7 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener, 
                     }
 
                     fetchDataCategory(All);
+                    fetchDataMenu("","");
 
                     activity.showLoading(false);
 
@@ -194,7 +224,58 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener, 
         });
     }
 
-    public void fetchDataCategory(MenuCategory category){
+    public void fetchDataMenu(String menuType, String categoryName){
+        activity.showLoading(true);
+
+        Call<MenuResponse> call = null;
+
+        if(menuType.equalsIgnoreCase("All"))
+        {
+            call = activity.api.getMenuBy("", categoryName);
+        }
+        else{
+            call = activity.api.getMenuBy(menuType, categoryName);
+        }
+
+//        call = activity.api.getMenuBy(menuType, categoryName);
+
+        menuList.clear();
+        call.enqueue(new Callback<MenuResponse>() {
+            @Override
+            public void onResponse(Call<MenuResponse> call, Response<MenuResponse> response) {
+
+                if (2 == response.code() / 100) {
+
+                    final MenuResponse menuResponse = response.body();
+                    Log.d("MenuFragment", "response = " + new Gson().toJson(menuResponse));
+
+
+
+                    List<Menu> listemp = menuResponse.getResult();
+                    for (Menu Item : listemp) {
+                        menuList.add(Item);
+
+                    }
+                    adapterMenu.notifyDataSetChanged();
+                    activity.showLoading(false);
+
+
+                } else {
+                    Toast.makeText(activity.getApplicationContext(), "Cannot fetching data.", Toast.LENGTH_SHORT).show();
+                    activity.showLoading(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MenuResponse> call, Throwable t) {
+                Toast.makeText(activity.getApplicationContext(), "Fail to fetching data.", Toast.LENGTH_SHORT).show();
+                Log.d("MenuFragment", t.getMessage()+t.getLocalizedMessage());
+                activity.showLoading(false);
+            }
+        });
+    }
+
+    public void fetchDataCategory(final MenuCategory category){
         activity.showLoading(true);
 
         Call<MenuCategoryResponse> call = null;
@@ -218,6 +299,7 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener, 
 
                     menuCategoryList.clear();
                     MenuCategory All = new MenuCategory();
+                    All.setMenuType(category.getMenuType());
                     All.setMenuCategoryName("All");
                     menuCategoryList.add(All);
 
@@ -255,10 +337,48 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener, 
         MenuCategory category = menuTypeList.get(position);
         fetchDataCategory(category);
         adapterCategory.resetLastSelected();
+
+        fetchDataMenu(category.getMenuType(), "");
     }
 
     @Override
     public void onClicked(int position) {
+        MenuCategory category = menuCategoryList.get(position);
 
+        if(category.getMenuCategoryName().equalsIgnoreCase("All"))
+        {
+            fetchDataMenu(category.getMenuType(), "");
+        }
+        else{
+            fetchDataMenu(category.getMenuType(), category.getMenuCategoryName());
+        }
+    }
+
+    @Override
+    public void onItemClick(String menuId, int position) {
+        addMenuFragment = new AddMenuFragment();
+
+        Bundle b = new Bundle();
+        Menu menu = menuList.get(position);
+
+        b.putInt("request_code",ADDMENUFRAGMENT_UPDATE_REQUEST_CODE);
+
+        if (menu != null) {
+            b.putSerializable("menu", menu);
+            Log.e("menu", "is valid");
+        } else {
+            Log.e("menu", "is null");
+        }
+
+        addMenuFragment.setArguments(b);
+
+        replaceFragment(R.id.fragment_container, addMenuFragment, true);
+
+    }
+
+    @Override
+    public void onItemDelete(String menuId, int position) {
+        adapterMenu.notifyItemRemoved(position);
+        menuList.remove(position);
     }
 }

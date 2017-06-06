@@ -2,7 +2,11 @@ package mamabe.posappandroid.Fragments;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import mamabe.posappandroid.Activities.MenuSettingActivity;
 import mamabe.posappandroid.Activities.UserSettingActivity;
 import mamabe.posappandroid.Callbacks.OnActionbarListener;
 import mamabe.posappandroid.R;
@@ -11,30 +15,40 @@ import mamabe.posappandroid.R;
  * Created by DedeEko on 5/2/2017.
  */
 
-public class dummyFragment extends BaseFragment implements View.OnClickListener{
+public class DummyFragment extends BaseFragment implements View.OnClickListener{
 
-    UserSettingActivity activity;
+    MenuSettingActivity activity;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        activity = (UserSettingActivity) getActivity();
+        activity = (MenuSettingActivity) getActivity();
 
 
     }
 
     private void setupActionBar() {
-        UserSettingActivity mainActivity = (UserSettingActivity) getActivity();
+        MenuSettingActivity mainActivity = (MenuSettingActivity) getActivity();
         mainActivity.setRightIcon(R.drawable.usersetting);
         mainActivity.setLeftIcon(R.drawable.back);
         mainActivity.setActionBarTitle(getPageTitle());
+
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     @Override
     public void initView(View view) {
 
+        TextView btnClear = (TextView)view.findViewById(R.id.textView34);
+
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity().getApplicationContext(), "CLEAR", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -72,11 +86,16 @@ public class dummyFragment extends BaseFragment implements View.OnClickListener{
 
     @Override
     public int getFragmentLayout() {
-        return R.layout.fragment_user_setting;
+        return R.layout.fragment_add_menu;
     }
 
     @Override
     public void onClick(View v) {
 
+    }
+
+    public void run() {
+        setupActionBar();
+//        fetchData();
     }
 }

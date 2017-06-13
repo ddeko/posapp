@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import mamabe.posappandroid.Callbacks.OnActionbarListener;
 import mamabe.posappandroid.R;
 
 /**
@@ -21,6 +22,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRightIcon(R.drawable.orderstatus);
         setLeftIcon(R.drawable.ic_exit_to_app_white_24dp);
         setActionBarTitleCenter("mamabe");
     }
@@ -51,7 +53,18 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     public void setUICallbacks() {
+        setActionbarListener(new OnActionbarListener() {
+            @Override
+            public void onLeftIconClick() {
+                finish();
 
+            }
+
+            @Override
+            public void onRightIconClick() {
+
+            }
+        });
     }
 
     @Override
@@ -77,11 +90,17 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
         }
         else if(v ==btnOrder)
         {
-
+            Intent i = new Intent(HomeActivity.this, OrderActivity.class);
+            startActivity(i);
         }
         else if(v ==btnReport)
         {
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

@@ -21,12 +21,12 @@ public class Setting implements Serializable {
     @Expose
     private String service;
 
-    public String getDiscount() {
+    public String getTables() {
         return tables;
     }
 
-    public void setDiscount(String discount) {
-        this.tables = discount;
+    public void setTables(String tables) {
+        this.tables = tables;
     }
 
     public String getTax() {

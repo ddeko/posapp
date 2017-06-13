@@ -115,7 +115,7 @@ public class PaymentSettingActivity extends BaseActivity implements View.OnClick
                     listSetting = settingResponse.getSetting();
 
                     etService.setText(listSetting.get(0).getService());
-                    etDiscount.setText(listSetting.get(0).getDiscount());
+                    etDiscount.setText(listSetting.get(0).getTables());
                     etTax.setText(listSetting.get(0).getTax());
 
                     showLoading(false);
@@ -141,7 +141,7 @@ public class PaymentSettingActivity extends BaseActivity implements View.OnClick
 
         Setting setting = new Setting();
 
-        setting.setDiscount(etDiscount.getText().toString());
+        setting.setTables(etDiscount.getText().toString());
         setting.setService(etService.getText().toString());
         setting.setTax(etTax.getText().toString());
 

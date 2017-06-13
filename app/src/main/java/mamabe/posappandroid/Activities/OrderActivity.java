@@ -1,31 +1,32 @@
 package mamabe.posappandroid.Activities;
 
-
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import mamabe.posappandroid.Callbacks.OnActionbarListener;
-import mamabe.posappandroid.Fragments.MenuFragment;
+import mamabe.posappandroid.Fragments.ListTableFragment;
+import mamabe.posappandroid.Fragments.UserFragment;
 import mamabe.posappandroid.R;
 
-public class MenuSettingActivity extends BaseActivity {
+/**
+ * Created by DedeEko on 6/8/2017.
+ */
 
-    MenuFragment menuFragment;
+public class OrderActivity  extends BaseActivity {
 
+    ListTableFragment listTableFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-
-        setRightIcon(R.drawable.menu);
+        setRightIcon(R.drawable.order);
         setLeftIcon(R.drawable.back);
-        setActionBarTitle("Menu Setting");
+        setActionBarTitle("Order Station");
 
-        menuFragment = new MenuFragment();
+        listTableFragment = new ListTableFragment();
 
-        replaceFragment(R.id.fragment_container, menuFragment, false);
-
-
+        replaceFragment(R.id.fragment_container, listTableFragment, false);
     }
 
     @Override
@@ -45,24 +46,18 @@ public class MenuSettingActivity extends BaseActivity {
             public void onLeftIconClick() {
                 onBackPressed();
 
-
             }
 
             @Override
             public void onRightIconClick() {
+
             }
         });
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-    }
-
-    @Override
     public int getLayout() {
-        return R.layout.activity_menu_setting;
+        return R.layout.activity_order;
     }
 
     @Override
@@ -73,7 +68,6 @@ public class MenuSettingActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        menuFragment.run();
+        listTableFragment.run();
     }
 }

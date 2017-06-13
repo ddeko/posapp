@@ -99,18 +99,18 @@
             app:layout_constraintTop_toBottomOf="@+id/list_menu_name" />
 
         <!--<vn.luongvo.widget.iosswitchview.SwitchView-->
-            <!--android:id="@+id/list_menu_availabfle"-->
-            <!--android:layout_width="50dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginEnd="12dp"-->
-            <!--android:layout_marginRight="12dp"-->
-            <!--app:checked="true"-->
-            <!--app:color_off="@color/white"-->
-            <!--app:color_on="@color/brown"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintRight_toRightOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent"-->
-            <!--app:layout_constraintVertical_bias="0.454" />-->
+        <!--android:id="@+id/list_menu_availabfle"-->
+        <!--android:layout_width="50dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginEnd="12dp"-->
+        <!--android:layout_marginRight="12dp"-->
+        <!--app:checked="true"-->
+        <!--app:color_off="@color/white"-->
+        <!--app:color_on="@color/brown"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent"-->
+        <!--app:layout_constraintVertical_bias="0.454" />-->
         <!---->
         <com.rm.rmswitch.RMSwitch
             android:id="@+id/list_menu_available"
@@ -118,18 +118,18 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:layout_marginRight="12dp"
-            app:switchDesign="large"
             app:checked="true"
-            app:forceAspectRatio="false"
             app:enabled="true"
-            app:switchBkgCheckedColor="@color/brown"
-            app:switchBkgNotCheckedColor="@color/white"
-            app:switchToggleCheckedColor="@color/white"
-            app:switchToggleNotCheckedColor="@color/actionbar_dark_color"
+            app:forceAspectRatio="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.454"/>
+            app:layout_constraintVertical_bias="0.454"
+            app:switchBkgCheckedColor="@color/brown"
+            app:switchBkgNotCheckedColor="@color/white"
+            app:switchDesign="large"
+            app:switchToggleCheckedColor="@color/white"
+            app:switchToggleNotCheckedColor="@color/actionbar_dark_color" />
     </android.support.constraint.ConstraintLayout>
 
 </com.daimajia.swipe.SwipeLayout>

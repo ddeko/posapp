@@ -75,7 +75,8 @@
                 android:layout_width="32dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/ic_lock_white_18dp" />
+                android:src="@drawable/ic_lock_white_18dp"
+                android:tint="@color/white" />
 
         </RelativeLayout>
 

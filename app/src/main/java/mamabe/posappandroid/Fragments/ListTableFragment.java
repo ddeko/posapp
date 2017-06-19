@@ -7,6 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.daimajia.swipe.SwipeLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +18,7 @@ import mamabe.posappandroid.Activities.MenuSettingActivity;
 import mamabe.posappandroid.Activities.OrderActivity;
 import mamabe.posappandroid.Adapter.ListTableAdapter;
 import mamabe.posappandroid.Callbacks.OnActionbarListener;
+import mamabe.posappandroid.Fragments.Dialogs.NumberOfGuestDialog;
 import mamabe.posappandroid.Models.Table;
 import mamabe.posappandroid.Preferences.SessionManager;
 import mamabe.posappandroid.R;
@@ -23,9 +27,10 @@ import mamabe.posappandroid.R;
  * Created by DedeEko on 5/2/2017.
  */
 
-public class ListTableFragment extends BaseFragment implements View.OnClickListener, ListTableAdapter.ListTableAdapterListener{
+public class ListTableFragment extends BaseFragment implements View.OnClickListener, ListTableAdapter.ListTableAdapterListener, NumberOfGuestDialog.NumberOfGuestDialogListener{
 
     private OrderActivity activity;
+    private OrderDetailFragment orderDetailFragment;
 
     private GridLayoutManager layoutManager;
     private RecyclerView listTable;
@@ -45,7 +50,7 @@ public class ListTableFragment extends BaseFragment implements View.OnClickListe
         activity = (OrderActivity) getActivity();
 
         tableItems = new ArrayList<>();
-        adapter = new ListTableAdapter(tableItems, this);
+        adapter = new ListTableAdapter(tableItems, this, activity.getApplicationContext());
 
         sessions = new SessionManager(getBaseActivity());
 
@@ -70,7 +75,7 @@ public class ListTableFragment extends BaseFragment implements View.OnClickListe
         listTable.setHasFixedSize(false);
         listTable.setLayoutManager(layoutManager);
         listTable.setAdapter(adapter);
-        listTable.addItemDecoration(new TableItemSpacingDecoration(2, 8, false));
+        listTable.addItemDecoration(new TableItemSpacingDecoration(2, 12, false));
     }
 
 
@@ -126,6 +131,11 @@ public class ListTableFragment extends BaseFragment implements View.OnClickListe
         settingData = sessions.getSettings();
         int total = Integer.parseInt(settingData.get(SessionManager.KEY_TABLES));
 
+        Table takeaway = new Table();
+        takeaway.setTableNumber("0");
+        takeaway.setNumberOfCustomer("0");
+        tableItems.add(takeaway);
+
         for(int i = 1; i<=total; i++){
             Table table = new Table();
             table.setTableNumber(String.valueOf(i));
@@ -140,13 +150,24 @@ public class ListTableFragment extends BaseFragment implements View.OnClickListe
         for (Table Item : tableItems) {
             total = total+Integer.parseInt(Item.getNumberOfCustomer());
         }
-        tvCustomer.setText(String.valueOf(total)+" Customers");
+        tvCustomer.setText(String.valueOf(total)+" Guest");
     }
 
     @Override
     public void onItemClick(int position) {
-        tableItems.get(position).setNumberOfCustomer(String.valueOf(position+1));
+
+        NumberOfGuestDialog numberOfGuestDialog = new NumberOfGuestDialog(true,this,position);
+        numberOfGuestDialog.show(activity.getSupportFragmentManager(),null);
+
+    }
+
+    @Override
+    public void onNumberClick(String number, int position) {
+        tableItems.get(position).setNumberOfCustomer(String.valueOf(number));
         getTotalCustomer();
+
+        orderDetailFragment = new OrderDetailFragment();
+        replaceFragment(R.id.fragment_container, orderDetailFragment, true);
     }
 
     public static class TableItemSpacingDecoration extends RecyclerView.ItemDecoration {

@@ -6,12 +6,10 @@
         <shape>
 
             <solid android:color="@color/brown" />
+            <stroke
+                android:width="0.5dp"
+                android:color="@color/brown" />
 
-            <padding
-                android:left="1dp"
-                android:top="1dp"
-                android:right="1dp"
-                android:bottom="1dp" />
 
         </shape>
 
@@ -22,12 +20,9 @@
         <shape>
 
             <solid android:color="#5c2f10" />
-
-            <padding
-                android:left="1dp"
-                android:top="1dp"
-                android:right="1dp"
-                android:bottom="1dp" />
+            <stroke
+                android:width="0.5dp"
+                android:color="@color/brown" />
 
         </shape>
 

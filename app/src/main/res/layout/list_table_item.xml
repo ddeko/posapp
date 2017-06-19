@@ -73,7 +73,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="2dp"
+                        android:padding="4dp"
                         android:text="Beverages"
                         android:textColor="@color/actionbar_dark_color"
                         android:textSize="16sp"
@@ -82,7 +82,7 @@
                         card_view:layout_constraintRight_toRightOf="parent"
                         card_view:layout_constraintTop_toTopOf="parent" />
 
-                    <ListView
+                    <android.support.v7.widget.RecyclerView
                         android:id="@+id/list_table_list_drink"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -106,7 +106,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="2dp"
+                        android:padding="4dp"
                         android:text="Foods"
                         android:textColor="@color/actionbar_dark_color"
                         android:textSize="16sp"
@@ -115,7 +115,7 @@
                         card_view:layout_constraintRight_toRightOf="parent"
                         card_view:layout_constraintTop_toTopOf="parent" />
 
-                    <ListView
+                    <android.support.v7.widget.RecyclerView
                         android:id="@+id/list_table_list_food"
                         android:layout_width="0dp"
                         android:layout_height="0dp"

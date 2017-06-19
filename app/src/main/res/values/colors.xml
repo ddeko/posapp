@@ -153,5 +153,6 @@
 
     <color name="separator">#5585471E</color>
     <color name="background_dim">#66000000</color>
+    <color name="gray_2">#ababac</color>
 
 </resources>

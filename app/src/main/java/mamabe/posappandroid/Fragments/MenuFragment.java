@@ -180,7 +180,7 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener, 
 
     public void fetchData(){
         activity.showLoading(true);
-        menuTypeList.clear();
+
         Call<MenuCategoryResponse> call = null;
         call = activity.api.getMenuType();
 
@@ -192,7 +192,7 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener, 
 
                     final MenuCategoryResponse menuCategoryResponse = response.body();
                     Log.d("MenuFragment", "response = " + new Gson().toJson(menuCategoryResponse));
-
+                    menuTypeList.clear();
                     MenuCategory All = new MenuCategory();
                     All.setMenuType("All");
                     menuTypeList.add(All);
@@ -329,7 +329,7 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener, 
 
     public void run() {
         setupActionBar();
-        fetchData();
+//        fetchData();
     }
 
     @Override
@@ -381,4 +381,5 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener, 
         adapterMenu.notifyItemRemoved(position);
         menuList.remove(position);
     }
+
 }

@@ -91,6 +91,9 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
         swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
         swipeLayout.setClickToClose(true);
 
+//        available.setEnabled(false);
+        available.setClickable(false);
+
         return new ViewHolder(v, swipeLayout, disc, name, price, tvDisc, available, item, deleteBtn);
     }
 

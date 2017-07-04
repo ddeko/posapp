@@ -47,16 +47,24 @@
         android:focusableInTouchMode="true"
         android:orientation="vertical" />
 
-    <TextView
-        android:id="@+id/confirm_message_text"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:gravity="center"
-        android:minHeight="67dp"
-        android:text="Are you sure to delete this data?"
-        android:textColor="@color/brown"
-        android:textSize="16sp" />
+        android:background="@color/softbrown"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/confirm_message_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:minHeight="67dp"
+            android:text="Are you sure to delete this data?"
+            android:textColor="@color/brown"
+            android:textSize="16sp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

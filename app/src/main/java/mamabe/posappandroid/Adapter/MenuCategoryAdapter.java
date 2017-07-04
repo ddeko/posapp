@@ -28,8 +28,6 @@ public class MenuCategoryAdapter extends RecyclerView.Adapter {
     ArrayList<MenuCategory> menuCategorieList;
 
     private Context context;
-    private MenuSettingActivity activity;
-    private MenuFragment fragment;
     private MenuCategoryAdapterListener listener;
 
 //    private RolePicker rolePicker;
@@ -42,12 +40,10 @@ public class MenuCategoryAdapter extends RecyclerView.Adapter {
     }
 
     public MenuCategoryAdapter(ArrayList<MenuCategory> menuCategorieList, MenuCategoryAdapterListener listener,
-                               Context context, MenuSettingActivity activity, MenuFragment fragment) {
+                               Context context) {
         this.menuCategorieList = menuCategorieList;
         this.listener = listener;
         this.context = context;
-        this.activity = activity;
-        this.fragment = fragment;
     }
 
     @Override

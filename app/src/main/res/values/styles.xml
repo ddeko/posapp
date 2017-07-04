@@ -35,4 +35,16 @@
         <item name="android:windowExitAnimation">@anim/popup_hide</item>
     </style>
 
+    <style name="MaterialBtnBrown" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="colorAccent">@color/brown</item>
+    </style>
+
+    <style name="MaterialBtnOrange" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="colorAccent">@color/actionbar_color</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

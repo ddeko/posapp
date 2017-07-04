@@ -23,8 +23,12 @@
         <activity android:name=".Activities.SettingActivity" />
         <activity android:name=".Activities.UserSettingActivity" />
         <activity android:name=".Activities.PaymentSettingActivity" />
-        <activity android:name=".Activities.MenuSettingActivity"></activity>
-        <activity android:name=".Activities.OrderActivity"></activity>
+        <activity android:name=".Activities.MenuSettingActivity" />
+        <activity android:name=".Activities.OrderActivity" />
+        <activity
+            android:name=".Activities.AddOrderActivity"
+            android:label="@string/title_activity_add_order"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

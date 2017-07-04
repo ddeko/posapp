@@ -29,9 +29,9 @@ public class ServiceGenerator {
         logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
 
         final OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
                 .addInterceptor(logging)
                 .build();
         //okHttpClient.networkInterceptors().add(new StethoInterceptor());

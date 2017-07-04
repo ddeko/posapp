@@ -171,7 +171,7 @@ public class AddMenuFragment extends BaseFragment implements View.OnClickListene
     public void onClick(View v) {
         if(v == btnClear)
         {
-            menuDisc.setText("");
+            menuDisc.setText("0");
         }
         else if(v == btnSave)
         {

@@ -1,7 +1,6 @@
 package mamabe.posappandroid.Fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,15 +13,17 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
-import mamabe.posappandroid.Activities.MenuSettingActivity;
-import mamabe.posappandroid.Adapter.MenuAdapter;
+import mamabe.posappandroid.Activities.AddOrderActivity;
 import mamabe.posappandroid.Adapter.MenuCategoryAdapter;
 import mamabe.posappandroid.Adapter.MenuCategoryTypeAdapter;
+import mamabe.posappandroid.Adapter.OrderMenuAdapter;
 import mamabe.posappandroid.Callbacks.OnActionbarListener;
+import mamabe.posappandroid.Fragments.Dialogs.AddOrderDialog;
 import mamabe.posappandroid.Models.Menu;
 import mamabe.posappandroid.Models.MenuCategory;
 import mamabe.posappandroid.Models.MenuCategoryResponse;
 import mamabe.posappandroid.Models.MenuResponse;
+import mamabe.posappandroid.Models.OrderDetailBody;
 import mamabe.posappandroid.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,17 +33,14 @@ import retrofit2.Response;
  * Created by DedeEko on 5/27/2017.
  */
 
-public class MenuFragment extends BaseFragment implements View.OnClickListener, MenuCategoryAdapter.MenuCategoryAdapterListener
+public class OrderMenuFragment extends BaseFragment implements View.OnClickListener, MenuCategoryAdapter.MenuCategoryAdapterListener
                                                             , MenuCategoryTypeAdapter.MenuTypeAdapterListener
-                                                            , MenuAdapter.MenuAdapterListener{
+                                                            , OrderMenuAdapter.MenuAdapterListener
+                                                            , AddOrderDialog.AddOrderDialogListener{
 
-    public static final int ADDMENUFRAGMENT_ADD_REQUEST_CODE = 1;
-    public static final int ADDMENUFRAGMENT_UPDATE_REQUEST_CODE = 2;
+    AddOrderActivity activity;
 
-    MenuSettingActivity activity;
-    AddMenuFragment addMenuFragment;
-
-    private MenuAdapter adapterMenu;
+    private OrderMenuAdapter adapterMenu;
     private MenuCategoryAdapter adapterCategory;
     private MenuCategoryTypeAdapter adapterType;
 
@@ -53,27 +51,28 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener, 
     private RecyclerView recyclerCategoryType;
     private RecyclerView recyclerCategory;
     private RecyclerView recyclerMenu;
-    private RelativeLayout btnAddMenu;
+
+    private boolean isAdditional;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        activity = (MenuSettingActivity) getActivity();
+        activity = (AddOrderActivity) getActivity();
 
         menuCategoryList = new ArrayList<>();
         menuTypeList = new ArrayList<>();
         menuList = new ArrayList<>();
 
-
-
         adapterCategory = new MenuCategoryAdapter(menuCategoryList, this, activity.getApplicationContext());
         adapterType = new MenuCategoryTypeAdapter(menuTypeList, this, activity.getApplicationContext());
-        adapterMenu = new MenuAdapter(menuList, this, activity);
+        adapterMenu = new OrderMenuAdapter(menuList, this, activity);
+
+        setAdditional(false);
     }
 
     private void setupActionBar() {
-        MenuSettingActivity mainActivity = (MenuSettingActivity) getActivity();
+        AddOrderActivity mainActivity = (AddOrderActivity) getActivity();
         mainActivity.setRightIcon(R.drawable.menu);
         mainActivity.setLeftIcon(R.drawable.back);
         mainActivity.setActionBarTitle(getPageTitle());
@@ -81,10 +80,9 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener, 
 
     @Override
     public void initView(View view) {
-        btnAddMenu = (RelativeLayout) view.findViewById(R.id.btn_add_menu);
-        recyclerCategoryType = (RecyclerView) view.findViewById(R.id.listCategoryType);
-        recyclerCategory = (RecyclerView) view.findViewById(R.id.listCategory);
-        recyclerMenu = (RecyclerView) view.findViewById(R.id.listMenu);
+        recyclerCategoryType = (RecyclerView) view.findViewById(R.id.add_order_list_type);
+        recyclerCategory = (RecyclerView) view.findViewById(R.id.add_order_list_category);
+        recyclerMenu = (RecyclerView) view.findViewById(R.id.add_order_list_menu);
 
         recyclerCategoryType.setHasFixedSize(false);
         recyclerCategory.setHasFixedSize(false);
@@ -96,13 +94,11 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener, 
 
         adapterCategory = new MenuCategoryAdapter(menuCategoryList, this, activity.getApplicationContext());
         adapterType = new MenuCategoryTypeAdapter(menuTypeList, this, activity.getApplicationContext());
-        adapterMenu = new MenuAdapter(menuList, this, activity);
+        adapterMenu = new OrderMenuAdapter(menuList, this, activity);
 
         recyclerCategory.setAdapter(adapterCategory);
         recyclerCategoryType.setAdapter(adapterType);
         recyclerMenu.setAdapter(adapterMenu);
-
-        btnAddMenu.setOnClickListener(this);
 
     }
 
@@ -158,24 +154,13 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener, 
 
     @Override
     public int getFragmentLayout() {
-        return R.layout.fragment_menu_setting;
+        return R.layout.fragment_add_order;
     }
 
     @Override
     public void onClick(View view) {
 
-        if(view==btnAddMenu)
-        {
-            addMenuFragment = new AddMenuFragment();
 
-            Bundle b = new Bundle();
-
-            b.putInt("request_code",ADDMENUFRAGMENT_ADD_REQUEST_CODE);
-            addMenuFragment.setArguments(b);
-
-            replaceFragment(R.id.fragment_container, addMenuFragment, true);
-
-        }
     }
 
     public void fetchData(){
@@ -237,7 +222,6 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener, 
             call = activity.api.getMenuBy(menuType, categoryName);
         }
 
-//        call = activity.api.getMenuBy(menuType, categoryName);
 
         menuList.clear();
         call.enqueue(new Callback<MenuResponse>() {
@@ -329,7 +313,6 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener, 
 
     public void run() {
         setupActionBar();
-//        fetchData();
     }
 
     @Override
@@ -356,30 +339,34 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener, 
 
     @Override
     public void onItemClick(String menuId, int position) {
-        addMenuFragment = new AddMenuFragment();
-
-        Bundle b = new Bundle();
         Menu menu = menuList.get(position);
 
-        b.putInt("request_code",ADDMENUFRAGMENT_UPDATE_REQUEST_CODE);
-
-        if (menu != null) {
-            b.putSerializable("menu", menu);
-            Log.e("menu", "is valid");
-        } else {
-            Log.e("menu", "is null");
-        }
-
-        addMenuFragment.setArguments(b);
-
-        replaceFragment(R.id.fragment_container, addMenuFragment, true);
-
+        AddOrderDialog addOrderDialog = new AddOrderDialog(true, this, menu);
+        addOrderDialog.show(activity.getSupportFragmentManager(),null);
     }
+
 
     @Override
-    public void onItemDelete(String menuId, int position) {
-        adapterMenu.notifyItemRemoved(position);
-        menuList.remove(position);
+    public void onAddItem(Menu item, String qty, String note) {
+        OrderDetailBody order =  new OrderDetailBody();
+        order.setMenu(item);
+        order.setMenuStatus("1");
+        if(!isAdditional)
+        {
+            order.setAdditional("0");
+        }
+        else
+        {
+            order.setAdditional("1");
+            order.setOrderId("1");
+        }
+        order.setNote(note);
+        order.setQty(qty);
+
+        activity.onAddItemToCart(order);
     }
 
+    public void setAdditional(boolean additional){
+        isAdditional = additional;
+    }
 }

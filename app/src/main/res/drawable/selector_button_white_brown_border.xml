@@ -8,7 +8,7 @@
             <solid android:color="@color/actionbar_color" />
             <stroke
                 android:width="0.5dp"
-                android:color="@color/brown" />
+                android:color="@color/actionbar_color" />
 
         </shape>
 
@@ -18,10 +18,10 @@
 
         <shape>
 
-            <solid android:color="@color/actionbar_dark_color" />
+            <solid android:color="#eaa76c" />
             <stroke
                 android:width="0.5dp"
-                android:color="@color/brown" />
+                android:color="@color/actionbar_color" />
 
 
         </shape>

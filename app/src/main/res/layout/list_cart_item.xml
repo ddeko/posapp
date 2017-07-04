@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/list_cart_item"
+    android:background="@drawable/list_with_separator"
+    android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="7dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="8dp"
+        android:paddingTop="7dp">
+
+        <TextView
+            android:id="@+id/list_cart_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="French Fries"
+            android:textColor="@color/brown"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/list_cart_text_disc"
+            android:layout_marginRight="26dp" />
+
+        <TextView
+            android:id="@+id/list_cart_text_disc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Disc"
+            android:textColor="@color/brown"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/list_cart_disc"
+            app:layout_constraintHorizontal_bias="0.75"
+            app:layout_constraintRight_toLeftOf="@+id/list_cart_qty"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="0dp" />
+
+        <TextView
+            android:id="@+id/list_cart_disc"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginLeft="3dp"
+            android:gravity="center"
+            android:text="30%"
+            android:textColor="@color/brown"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/list_cart_qty"
+            app:layout_constraintLeft_toRightOf="@+id/list_cart_text_disc"
+            app:layout_constraintTop_toTopOf="@+id/list_cart_qty"
+            app:layout_constraintVertical_bias="0.51" />
+
+        <TextView
+            android:id="@+id/list_cart_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="10000"
+            android:textColor="@color/brown"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/list_cart_name" />
+
+        <TextView
+            android:id="@+id/list_cart_disc_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="3dp"
+            android:text="10000"
+            android:textColor="@color/nav_line"
+            android:visibility="gone"
+            app:layout_constraintLeft_toRightOf="@+id/list_cart_price"
+            app:layout_constraintTop_toBottomOf="@+id/list_cart_name" />
+
+        <TextView
+            android:id="@+id/list_cart_qty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="5X"
+            android:textColor="@color/brown"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginRight="4dp" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/brown"
+        android:orientation="vertical"></LinearLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/order_detail_item_note_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/actionbar_color"
+        android:paddingBottom="4dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="4dp">
+
+        <TextView
+            android:id="@+id/list_cart_tv_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="0dp"
+            android:text="note :"
+            android:textColor="@color/brown"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/list_cart_note"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/list_cart_note" />
+
+        <TextView
+            android:id="@+id/list_cart_note"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="0dp"
+            android:maxLines="2"
+            android:padding="2dp"
+            android:text="White Cream, Less Sugar"
+            android:textColor="@color/brown"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toRightOf="@+id/list_cart_tv_note"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+    </android.support.constraint.ConstraintLayout>
+    
+</LinearLayout>

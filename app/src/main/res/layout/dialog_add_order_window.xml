@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_form_control">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout5"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:background="@color/actionbar_color"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/add_order_dialog_title"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="12dp"
+            android:layout_marginRight="0dp"
+            android:gravity="center_vertical"
+            android:text="Food Name"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/add_order_dialog_delete_btn"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/add_order_dialog_delete_btn"
+            android:layout_width="40dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="0dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_delete_black_24dp" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/separatorline"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/actionbar_dark_color"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/dialog_window"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/softbrown"
+        android:paddingBottom="15dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingTop="15dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/separatorline">
+
+        <TextView
+            android:id="@+id/tv_quantity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="4dp"
+            android:paddingLeft="12dp"
+            android:text="Quantity"
+            android:textColor="@color/brown"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/et_quantity"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="0dp"
+            android:background="@drawable/textinput_border"
+            android:ems="10"
+            android:focusableInTouchMode="true"
+            android:inputType="number"
+            android:paddingLeft="12dp"
+            android:text="1"
+            android:textColor="@color/brown"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/btn_min"
+            app:layout_constraintTop_toBottomOf="@+id/tv_quantity" />
+
+        <ImageView
+            android:id="@+id/btn_add"
+            android:layout_width="40dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/selector_button_blank_no_corners"
+            android:cropToPadding="false"
+            android:scaleType="fitXY"
+            android:tint="@color/brown"
+            app:layout_constraintBottom_toBottomOf="@+id/et_quantity"
+            app:layout_constraintLeft_toRightOf="@+id/btn_min"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/et_quantity"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ic_add_box_black_24dp" />
+
+        <ImageView
+            android:id="@+id/btn_min"
+            android:layout_width="40dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="0dp"
+            android:background="@drawable/selector_button_blank_no_corners"
+            android:cropToPadding="false"
+            android:scaleType="fitXY"
+            android:tint="@color/brown"
+            app:layout_constraintBottom_toBottomOf="@+id/et_quantity"
+            app:layout_constraintLeft_toRightOf="@+id/et_quantity"
+            app:layout_constraintRight_toLeftOf="@+id/btn_add"
+            app:layout_constraintTop_toTopOf="@+id/et_quantity"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ic_indeterminate_check_box_black_24dp" />
+
+        <TextView
+            android:id="@+id/textView26"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="12dp"
+            android:paddingTop="6dp"
+            android:text="Note "
+            android:textColor="@color/brown"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_quantity" />
+
+        <EditText
+            android:id="@+id/et_note"
+            android:layout_width="0dp"
+            android:layout_height="65dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="0dp"
+            android:background="@drawable/textinput_border"
+            android:gravity="top"
+            android:inputType="textCapSentences|textMultiLine"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp"
+            android:textAlignment="textStart"
+            android:textColor="@color/brown"
+            android:textColorHint="@color/grey_font"
+            android:textSize="15sp"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView26" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/brown"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        app:layout_constraintHorizontal_bias="0.462"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_window" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
+
+        <Button
+            android:id="@+id/dialog_order_cancel_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_button_blank_no_corners"
+            android:gravity="center"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/actionbar_dark_color"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/brown"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical" />
+
+        <Button
+            android:id="@+id/dialog_order_add_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_button_blank_no_corners"
+            android:gravity="center"
+            android:text=" Add Item"
+            android:textAllCaps="false"
+            android:textColor="@color/actionbar_dark_color"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

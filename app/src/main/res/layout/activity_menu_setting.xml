@@ -24,9 +24,7 @@
         <include
             layout="@layout/view_default_actionbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="30dp"
-            tools:layout_editor_absoluteY="11dp" />
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 

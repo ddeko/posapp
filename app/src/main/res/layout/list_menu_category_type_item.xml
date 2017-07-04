@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_wraperr"
     android:layout_width="160dp"
-    android:layout_height="50dp"
+    android:layout_height="45dp"
     android:background="@drawable/textinput_border">
 
     <TextView

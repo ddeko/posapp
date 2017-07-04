@@ -29,8 +29,6 @@ public class MenuCategoryTypeAdapter extends RecyclerView.Adapter {
     ArrayList<MenuCategory> menuTypeList;
 
     private Context context;
-    private MenuSettingActivity activity;
-    private MenuFragment fragment;
     private MenuTypeAdapterListener listener;
 
     public int lastSelected = 0;
@@ -40,12 +38,10 @@ public class MenuCategoryTypeAdapter extends RecyclerView.Adapter {
     }
 
     public MenuCategoryTypeAdapter(ArrayList<MenuCategory> menuTypeList, MenuTypeAdapterListener listener,
-                               Context context, MenuSettingActivity activity, MenuFragment fragment) {
+                               Context context) {
         this.menuTypeList = menuTypeList;
         this.listener = listener;
         this.context = context;
-        this.activity = activity;
-        this.fragment = fragment;
     }
 
     @Override

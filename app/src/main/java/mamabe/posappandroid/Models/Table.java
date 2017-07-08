@@ -10,6 +10,15 @@ public class Table implements Serializable {
 
     private String tableNumber;
     private String numberOfCustomer;
+    private boolean isTakeaway;
+
+    public boolean isTakeaway() {
+        return isTakeaway;
+    }
+
+    public void setTakeaway(boolean takeaway) {
+        isTakeaway = takeaway;
+    }
 
     public String getTableNumber() {
         return tableNumber;

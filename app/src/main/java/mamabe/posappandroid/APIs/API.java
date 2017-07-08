@@ -1,6 +1,8 @@
 package mamabe.posappandroid.APIs;
 
 
+import java.util.ArrayList;
+
 import mamabe.posappandroid.Models.EmployeeBody;
 import mamabe.posappandroid.Models.EmployeePostResponse;
 import mamabe.posappandroid.Models.EmployeeResponse;
@@ -8,12 +10,21 @@ import mamabe.posappandroid.Models.MenuBody;
 import mamabe.posappandroid.Models.MenuCategoryResponse;
 import mamabe.posappandroid.Models.MenuPostResponse;
 import mamabe.posappandroid.Models.MenuResponse;
+import mamabe.posappandroid.Models.OrderBody;
+import mamabe.posappandroid.Models.OrderDetailBody;
+import mamabe.posappandroid.Models.OrderDetailPostResponse;
+import mamabe.posappandroid.Models.OrderPostResponse;
+import mamabe.posappandroid.Models.OrderResponse;
+import mamabe.posappandroid.Models.OrderTableResponse;
 import mamabe.posappandroid.Models.RoleResponse;
 import mamabe.posappandroid.Models.Setting;
 import mamabe.posappandroid.Models.SettingPostResponse;
 import mamabe.posappandroid.Models.SettingResponse;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -83,6 +94,29 @@ public interface API {
     Call<MenuPostResponse>
     deleteMenu(@Body MenuBody menuBody);
 
+    @GET("getMenuByAvailability")
+    Call<MenuResponse>
+    getMenuByAvailability(@Query("menu_type") String menu_type,
+                          @Query("menuCategory_name") String menuCategory_name);
+
+
+    //ORDER
+
+    @POST("insertOrderDetail")
+    Call<OrderDetailPostResponse>
+    postOrderDetail(@Body OrderDetailBody orderDetailBody);
+
+    @POST("insertOrder")
+    Call<OrderPostResponse>
+    postOrder(@Body OrderBody orderBody);
+
+    @GET("getAllOrder")
+    Call<OrderResponse>
+    getAllOrder();
+
+    @GET("getOrderDetailbyId")
+    Call<OrderTableResponse>
+    getOrderDetailbyId(@Query("order_id") String order_id);
 //    //Penyakit
 //    @GET("penyakitall/{page}/{count_page}")
 //    Call<DiseaseResponse>

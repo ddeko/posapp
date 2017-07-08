@@ -3,32 +3,32 @@ package mamabe.posappandroid.Models;
 import java.io.Serializable;
 
 /**
- * Created by DedeEko on 7/3/2017.
+ * Created by DedeEko on 7/5/2017.
  */
 
-public class OrderDetailBody implements Serializable{
-    private String orderDetailId;
-    private String menuStatus;
+public class OrderDetailBody  implements Serializable {
+    private String menu_status;
     private String note;
     private String qty;
     private String additional;
-    private String orderId;
-    private Menu menu;
+    private String order_id;
+    private String menu_id;
+    private String takeaway;
 
-    public String getOrderDetailId() {
-        return orderDetailId;
+    public String getTakeaway() {
+        return takeaway;
     }
 
-    public void setOrderDetailId(String orderDetailId) {
-        this.orderDetailId = orderDetailId;
+    public void setTakeaway(String takeaway) {
+        this.takeaway = takeaway;
     }
 
-    public String getMenuStatus() {
-        return menuStatus;
+    public String getMenu_status() {
+        return menu_status;
     }
 
-    public void setMenuStatus(String menuStatus) {
-        this.menuStatus = menuStatus;
+    public void setMenu_status(String menu_status) {
+        this.menu_status = menu_status;
     }
 
     public String getNote() {
@@ -55,19 +55,19 @@ public class OrderDetailBody implements Serializable{
         this.additional = additional;
     }
 
-    public String getOrderId() {
-        return orderId;
+    public String getOrder_id() {
+        return order_id;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setOrder_id(String order_id) {
+        this.order_id = order_id;
     }
 
-    public Menu getMenu() {
-        return menu;
+    public String getMenu_id() {
+        return menu_id;
     }
 
-    public void setMenu(Menu menu) {
-        this.menu = menu;
+    public void setMenu_id(String menu_id) {
+        this.menu_id = menu_id;
     }
 }

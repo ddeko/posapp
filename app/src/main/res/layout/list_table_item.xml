@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="150dp"
-    android:layout_margin="3dp">
+    android:layout_margin="3dp"
+    android:background="@color/softbrown">
 
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/table_item"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="0dp"
         android:foreground="?android:attr/selectableItemBackground"
         android:weightSum="3"
         card_view:cardCornerRadius="@dimen/cardview_radius"
-        card_view:cardElevation="2dp"
+        card_view:cardElevation="3dp"
         card_view:cardUseCompatPadding="true"
         card_view:layout_constraintBottom_toBottomOf="parent"
         card_view:layout_constraintHorizontal_bias="0.0"
@@ -51,84 +51,102 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/list_table_list_swipe"
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/table_item_fill_holder"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:background="@color/softbrownARGB"
+                android:orientation="vertical"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintLeft_toLeftOf="parent"
                 card_view:layout_constraintRight_toRightOf="parent"
                 card_view:layout_constraintTop_toBottomOf="@+id/linearLayout3">
-                <!-- Bottom View Start-->
-                <!-- Bottom View End-->
 
-                <!-- Surface View Start -->
-                <!-- Surface View End -->
-                <android.support.constraint.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/table_item_tv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="0dp"
+                    android:padding="2dp"
+                    android:text="Status - Unfinished"
+                    android:textColor="@color/brown"
+                    android:textSize="13sp"
+                    card_view:layout_constraintBottom_toBottomOf="parent"
+                    card_view:layout_constraintHorizontal_bias="0.501"
+                    card_view:layout_constraintLeft_toLeftOf="parent"
+                    card_view:layout_constraintRight_toRightOf="parent"
+                    card_view:layout_constraintTop_toBottomOf="@+id/table_item_tv_total" />
 
-                    <TextView
-                        android:id="@+id/textView30"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="4dp"
-                        android:text="Beverages"
-                        android:textColor="@color/actionbar_dark_color"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        card_view:layout_constraintLeft_toLeftOf="parent"
-                        card_view:layout_constraintRight_toRightOf="parent"
-                        card_view:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/table_item_tv_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:text="Total Guest - 5"
+                    android:textColor="@color/brown"
+                    android:textSize="13sp"
+                    card_view:layout_constraintBottom_toTopOf="@+id/table_item_tv_status"
+                    card_view:layout_constraintHorizontal_bias="0.5"
+                    card_view:layout_constraintLeft_toLeftOf="parent"
+                    card_view:layout_constraintRight_toRightOf="parent"
+                    card_view:layout_constraintTop_toBottomOf="@+id/table_item_tv_name" />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/list_table_list_drink"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_marginBottom="0dp"
-                        android:layout_marginLeft="0dp"
-                        android:layout_marginRight="0dp"
-                        android:layout_marginTop="0dp"
-                        card_view:layout_constraintBottom_toBottomOf="parent"
-                        card_view:layout_constraintLeft_toLeftOf="parent"
-                        card_view:layout_constraintRight_toRightOf="parent"
-                        card_view:layout_constraintTop_toBottomOf="@+id/textView30" />
-                </android.support.constraint.ConstraintLayout>
+                <TextView
+                    android:id="@+id/table_item_tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:ellipsize="marquee"
+                    android:padding="2dp"
+                    android:singleLine="true"
+                    android:text="Guest Name - Albert"
+                    android:textColor="@color/brown"
+                    android:textSize="13sp"
+                    card_view:layout_constraintBottom_toTopOf="@+id/table_item_tv_total"
+                    card_view:layout_constraintHorizontal_bias="0.501"
+                    card_view:layout_constraintLeft_toLeftOf="parent"
+                    card_view:layout_constraintRight_toRightOf="parent"
+                    card_view:layout_constraintTop_toBottomOf="@+id/table_item_tv_date" />
 
+                <TextView
+                    android:id="@+id/table_item_tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="marquee"
+                    android:padding="4dp"
+                    android:text="2017-06-06 09:35:00"
+                    android:textColor="@color/actionbar_dark_color"
+                    android:textStyle="bold"
+                    card_view:layout_constraintLeft_toLeftOf="parent"
+                    card_view:layout_constraintRight_toRightOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
 
-                <android.support.constraint.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/table_item_empty_holder"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.0"
+                card_view:layout_constraintLeft_toLeftOf="parent"
+                card_view:layout_constraintRight_toRightOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+                card_view:layout_constraintVertical_bias="0.0">
 
-                    <TextView
-                        android:id="@+id/textView29"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="4dp"
-                        android:text="Foods"
-                        android:textColor="@color/actionbar_dark_color"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        card_view:layout_constraintLeft_toLeftOf="parent"
-                        card_view:layout_constraintRight_toRightOf="parent"
-                        card_view:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:id="@+id/imageView17"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@color/softbrownARGB"
+                    android:tint="@color/actionbar_dark_color"
+                    app:srcCompat="@drawable/table"
+                    card_view:layout_constraintBottom_toBottomOf="parent"
+                    card_view:layout_constraintLeft_toLeftOf="parent"
+                    card_view:layout_constraintRight_toRightOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent" />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/list_table_list_food"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_marginTop="0dp"
-                        card_view:layout_constraintBottom_toBottomOf="parent"
-                        card_view:layout_constraintHorizontal_bias="0.0"
-                        card_view:layout_constraintLeft_toLeftOf="parent"
-                        card_view:layout_constraintRight_toRightOf="parent"
-                        card_view:layout_constraintTop_toBottomOf="@+id/textView29" />
-                </android.support.constraint.ConstraintLayout>
-
-
-            </com.daimajia.swipe.SwipeLayout>
+            </android.support.constraint.ConstraintLayout>
 
 
         </android.support.constraint.ConstraintLayout>

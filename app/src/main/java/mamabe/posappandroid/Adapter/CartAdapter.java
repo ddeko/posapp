@@ -13,7 +13,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 
 import mamabe.posappandroid.Activities.AddOrderActivity;
-import mamabe.posappandroid.Models.OrderDetailBody;
+import mamabe.posappandroid.Models.OrderDetail;
 import mamabe.posappandroid.R;
 
 
@@ -24,7 +24,7 @@ import mamabe.posappandroid.R;
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
 
     public interface CartAdapterListener {
-        void onItemClick(OrderDetailBody item, int position);
+        void onItemClick(OrderDetail item, int position);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -54,12 +54,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
         }
     }
 
-    ArrayList<OrderDetailBody> orderList;
+    ArrayList<OrderDetail> orderList;
 
     private CartAdapterListener listener;
     private AddOrderActivity activity;
 
-    public CartAdapter(ArrayList<OrderDetailBody> orderList, CartAdapterListener listener, AddOrderActivity activity) {
+    public CartAdapter(ArrayList<OrderDetail> orderList, CartAdapterListener listener, AddOrderActivity activity) {
         this.orderList = orderList;
         this.listener = listener;
         this.activity = activity;
@@ -85,7 +85,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final OrderDetailBody item = orderList.get(position);
+        final OrderDetail item = orderList.get(position);
 
         holder.name.setText(item.getMenu().getMenuName());
         holder.qty.setText(item.getQty()+ "X");

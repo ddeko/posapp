@@ -5,21 +5,28 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.swipe.SwipeLayout;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import mamabe.posappandroid.Activities.AddOrderActivity;
 import mamabe.posappandroid.Activities.OrderActivity;
 import mamabe.posappandroid.Application.Config;
 import mamabe.posappandroid.Callbacks.OnActionbarListener;
+import mamabe.posappandroid.Models.OrderBody;
 import mamabe.posappandroid.R;
 
 /**
@@ -43,6 +50,13 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
     private SimpleDateFormat dateFormatter;
     private Calendar c;
 
+    Bundle bundle;
+    private String subTotal;
+
+    String datetime;
+
+    OrderBody orderBody;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +65,12 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
 
         c = Calendar.getInstance();
         dateFormatter = new SimpleDateFormat(Config.DATE_FORMAT_LONG, Locale.US);
+
+        getDate();
+
+        bundle = getArguments();
+
+        orderBody = (OrderBody) bundle.getSerializable("orderBody");
 
     }
 
@@ -76,6 +96,15 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
         btnCheckOut = (Button)view.findViewById(R.id.order_detail_btn_checkout);
 
         btnAddOrder.setOnClickListener(this);
+
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator(',');
+        symbols.setDecimalSeparator('.');
+        DecimalFormat decimalFormat = new DecimalFormat("#,###.00", symbols);
+        subTotal = decimalFormat.format(00);
+
+        tvSubTotal.setText(subTotal);
+        tvTotalItem.setText("0 Items");
     }
 
     @Override
@@ -97,9 +126,47 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
     public void updateUI() {
         setupActionBar();
 
-        String formattedDate = dateFormatter.format(c.getTime());
-        tvOrderDate.setText(formattedDate);
-    }
+        if(orderBody.getOrder_id()==null)
+        {
+            String formattedDate = dateFormatter.format(c.getTime());
+            getDate();
+            tvOrderDate.setText(datetime);
+
+
+        }
+        else{
+            tvGuestName.setText(orderBody.getCustomer_name());
+            tvOrderDate.setText(orderBody.getOrder_date());
+//            String formattedDates = "";
+//
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+//
+//            try {
+//                Toast.makeText(activity, orderBody.getOrder_id(), Toast.LENGTH_SHORT).show();
+//                formattedDates = dateFormatter.format(dateFormat.parse(orderBody.getOrder_date()));
+//                tvOrderDate.setText(formattedDates);
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+////            log.d(activity, formattedDates +" "+ convertedDate + " " +orderBody.getOrder_date(), Toast.LENGTH_SHORT).show();
+//            Log.d("OrderResponsdasdadae", formattedDates +" "  + " " +orderBody.getOrder_date() );
+//            tvOrderDate.setText(formattedDates);
+            datetime = orderBody.getOrder_date();
+        }
+
+
+        if(orderBody.getTakeaway().equalsIgnoreCase("1"))
+        {
+            tvTableNumber.setText("Take Away");
+        }
+        else
+        {
+            tvTableNumber.setText("Table " + orderBody.getTable_no());
+        }
+        tvTotalGuest.setText(orderBody.getNumber_of_customer());
+
+
+        }
 
     @Override
     public void onResume() {
@@ -124,7 +191,12 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
 
         if(view==btnAddOrder)
         {
+            orderBody.setCustomer_name(tvGuestName.getText().toString());
+            orderBody.setOrder_date(datetime);
+            orderBody.setOrder_status("");
             Intent i = new Intent(activity.getApplicationContext(), AddOrderActivity.class);
+
+            i.putExtra("orderBody", orderBody);
             startActivity(i);
         }
 
@@ -133,5 +205,17 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
     public void run() {
         setupActionBar();
 
+    }
+    public void getDate(){
+        int mYear = c.get(Calendar.YEAR);
+        int mMonth = c.get(Calendar.MONTH);
+        int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
+        int ss = c.get(Calendar.MILLISECOND);
+
+        datetime = String.valueOf(mYear)+"-"+ String.valueOf(mMonth) +"-"+String.valueOf(mDay) + " "
+                + String.valueOf(hour) + ":" +String.valueOf(minute) + ":" +String.valueOf(ss);
     }
 }

@@ -10,10 +10,11 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import mamabe.posappandroid.Models.Menu;
-import mamabe.posappandroid.Models.OrderDetailBody;
+import mamabe.posappandroid.Models.OrderDetail;
 import mamabe.posappandroid.R;
 
 
@@ -27,21 +28,33 @@ public class UpdateOrderDialog extends DialogFragment {
     private ImageView btnDelete;
     private Button btnCancel;
     private Button btnAddItem;
+    private RadioGroup radioGroup;
+    private RadioButton rdDineIn;
+    private RadioButton rdTakeaway;
 
     private Dialog dialog;
 
     private boolean cancelOnTouchOutside;
 
     public interface UpdateOrderDialogListener{
-        void onUpdateItem(OrderDetailBody orderItem, String qty, String note, int position);
+        void onUpdateItem(OrderDetail orderItem, String qty, String note, int position, String takeaway);
         void onItemDelete(int position);
     }
 
     private UpdateOrderDialogListener listener;
     private int position;
-    private OrderDetailBody orderItem;
+    private OrderDetail orderItem;
+    private boolean isFromMenu;
 
-    public UpdateOrderDialog(boolean cancelOnTouchOutside, UpdateOrderDialogListener listener, OrderDetailBody orderItem, int position) {
+    public UpdateOrderDialog(boolean cancelOnTouchOutside, UpdateOrderDialogListener listener, OrderDetail orderItem, int position) {
+        this.cancelOnTouchOutside = cancelOnTouchOutside;
+        this.listener = listener;
+        this.orderItem = orderItem;
+        this.position = position;
+    }
+
+    public UpdateOrderDialog(boolean isFromMenu, boolean cancelOnTouchOutside, UpdateOrderDialogListener listener, OrderDetail orderItem, int position) {
+        this.isFromMenu = isFromMenu;
         this.cancelOnTouchOutside = cancelOnTouchOutside;
         this.listener = listener;
         this.orderItem = orderItem;
@@ -69,7 +82,13 @@ public class UpdateOrderDialog extends DialogFragment {
         btnAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onUpdateItem(orderItem, etQty.getText().toString(), etNote.getText().toString(), position);
+                if(radioGroup.getCheckedRadioButtonId()==rdDineIn.getId())
+                {
+                    listener.onUpdateItem(orderItem,etQty.getText().toString(),etNote.getText().toString(), position, "0");
+                }
+                else {
+                    listener.onUpdateItem(orderItem, etQty.getText().toString(), etNote.getText().toString(), position, "1");
+                }
                 dismiss();
             }
         });
@@ -117,13 +136,22 @@ public class UpdateOrderDialog extends DialogFragment {
         btnDelete = (ImageView)dialog.findViewById(R.id.add_order_dialog_delete_btn);
         btnCancel = (Button)dialog.findViewById(R.id.dialog_order_cancel_btn);
         btnAddItem = (Button)dialog.findViewById(R.id.dialog_order_add_btn);
+        radioGroup = (RadioGroup)dialog.findViewById(R.id.dialog_order_radio_grup);
+        rdDineIn = (RadioButton)dialog.findViewById(R.id.rd_dineIn);
+        rdTakeaway = (RadioButton)dialog.findViewById(R.id.rd_takeaway);
 
         etQty.setText(orderItem.getQty());
         etNote.setText(orderItem.getNote());
         tvFoodName.setText(orderItem.getMenu().getMenuName());
-        btnDelete.setVisibility(View.VISIBLE);
-        btnAddItem.setText("Save");
-
+        if(isFromMenu)
+        {
+            btnDelete.setVisibility(View.GONE);
+            btnAddItem.setText("Save");
+        }
+        else {
+            btnDelete.setVisibility(View.VISIBLE);
+            btnAddItem.setText("Save");
+        }
     }
 
     @Override

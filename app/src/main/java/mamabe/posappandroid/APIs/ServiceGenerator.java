@@ -13,8 +13,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class ServiceGenerator {
-    public static String BASE_URL = "http://192.168.43.53/posapp_api/index.php/Api/Posapp/";
-    public static String BASE_URL2 = "http://mamabepos.esy.es/posapp_api/index.php/Api/Posapp/10.5.50.105";
+    public static String BASE_URL = "http://192.168.43.124/posapp_api/index.php/Api/Posapp/";
+    public static String BASE_URL2 = "http://mamabepos.esy.es/posapp_api/index.php/Api/Posapp/";
 
     private ServiceGenerator() {
     }
@@ -26,7 +26,7 @@ public class ServiceGenerator {
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
 // set your desired log level
-        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         final OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(30, TimeUnit.SECONDS)

@@ -4,24 +4,33 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daimajia.swipe.SwipeLayout;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import mamabe.posappandroid.Activities.MenuSettingActivity;
 import mamabe.posappandroid.Activities.OrderActivity;
 import mamabe.posappandroid.Adapter.ListTableAdapter;
 import mamabe.posappandroid.Callbacks.OnActionbarListener;
 import mamabe.posappandroid.Fragments.Dialogs.NumberOfGuestDialog;
+import mamabe.posappandroid.Models.Order;
+import mamabe.posappandroid.Models.OrderBody;
+import mamabe.posappandroid.Models.OrderResponse;
 import mamabe.posappandroid.Models.Table;
 import mamabe.posappandroid.Preferences.SessionManager;
 import mamabe.posappandroid.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by DedeEko on 5/2/2017.
@@ -36,7 +45,8 @@ public class ListTableFragment extends BaseFragment implements View.OnClickListe
     private RecyclerView listTable;
     private TextView tvCustomer, tvTotalTable;
 
-    private ArrayList<Table> tableItems;
+    private ArrayList<Order> tableItems;
+    private ArrayList<Order> listOrder;
     private ListTableAdapter adapter;
 
     SessionManager sessions;
@@ -50,6 +60,7 @@ public class ListTableFragment extends BaseFragment implements View.OnClickListe
         activity = (OrderActivity) getActivity();
 
         tableItems = new ArrayList<>();
+        listOrder = new ArrayList<>();
         adapter = new ListTableAdapter(tableItems, this, activity.getApplicationContext());
 
         sessions = new SessionManager(getBaseActivity());
@@ -102,6 +113,7 @@ public class ListTableFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void onResume() {
         super.onResume();
+        fetchData();
 
         updateUI();
     }
@@ -124,31 +136,37 @@ public class ListTableFragment extends BaseFragment implements View.OnClickListe
     public void run() {
         setupActionBar();
         fetchData();
-        getTotalCustomer();
+//        getTotalCustomer();
     }
 
     public void fetchData() {
+        tableItems.clear();
         settingData = sessions.getSettings();
         int total = Integer.parseInt(settingData.get(SessionManager.KEY_TABLES));
 
-        Table takeaway = new Table();
-        takeaway.setTableNumber("0");
+        Order takeaway = new Order();
+        takeaway.setTableNo("0");
         takeaway.setNumberOfCustomer("0");
+        takeaway.setTakeaway("1");
         tableItems.add(takeaway);
 
         for(int i = 1; i<=total; i++){
-            Table table = new Table();
-            table.setTableNumber(String.valueOf(i));
+            Order table = new Order();
+            table.setTableNo(String.valueOf(i));
             table.setNumberOfCustomer("0");
             tableItems.add(table);
         }
         tvTotalTable.setText(String.valueOf(total +" Tabels"));
+
+
+        fetchOrderData();
     }
 
     public void getTotalCustomer(){
         int total = 0;
-        for (Table Item : tableItems) {
+        for (Order Item : tableItems) {
             total = total+Integer.parseInt(Item.getNumberOfCustomer());
+            Log.d("getTotalCustomer", total + " + " + Item.getNumberOfCustomer());
         }
         tvCustomer.setText(String.valueOf(total)+" Guest");
     }
@@ -156,18 +174,135 @@ public class ListTableFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void onItemClick(int position) {
 
-        NumberOfGuestDialog numberOfGuestDialog = new NumberOfGuestDialog(true,this,position);
-        numberOfGuestDialog.show(activity.getSupportFragmentManager(),null);
+        if(tableItems.get(position).getTakeaway()=="1") {
+            OrderBody orderBody = new OrderBody();
+            orderBody.setTable_no(tableItems.get(position).getTableNo());
+            orderBody.setNumber_of_customer("1");
+            orderBody.setTakeaway("1");
 
+            orderDetailFragment = new OrderDetailFragment();
+
+            Bundle b = new Bundle();
+
+            if (orderBody != null) {
+                b.putSerializable("orderBody", orderBody);
+                Log.e("orderBody", "is valid");
+            } else {
+                Log.e("orderBody", "is null");
+            }
+
+            orderDetailFragment.setArguments(b);
+
+            replaceFragment(R.id.fragment_container, orderDetailFragment, true);
+        }
+        else{
+            if(tableItems.get(position).getOrderId()==null)
+            {
+                NumberOfGuestDialog numberOfGuestDialog = new NumberOfGuestDialog(true,this,position);
+                numberOfGuestDialog.show(activity.getSupportFragmentManager(),null);
+            }
+            else{
+                OrderBody orderBody = new OrderBody();
+                orderBody.setTable_no(tableItems.get(position).getTableNo());
+                orderBody.setNumber_of_customer(tableItems.get(position).getNumberOfCustomer());
+                orderBody.setTakeaway(tableItems.get(position).getTakeaway());
+                orderBody.setOrder_date(tableItems.get(position).getOrderDate());
+                orderBody.setOrder_id(tableItems.get(position).getOrderId());
+                orderBody.setOrder_status(tableItems.get(position).getOrderStatus());
+                orderBody.setCustomer_name(tableItems.get(position).getCustomerName());
+
+                orderDetailFragment = new OrderDetailFragment();
+
+                Bundle b = new Bundle();
+
+                if (orderBody != null) {
+                    b.putSerializable("orderBody", orderBody);
+                    Log.e("orderBody", "is valid");
+                } else {
+                    Log.e("orderBody", "is null");
+                }
+
+                orderDetailFragment.setArguments(b);
+
+                replaceFragment(R.id.fragment_container, orderDetailFragment, true);
+            }
+
+        }
     }
 
     @Override
     public void onNumberClick(String number, int position) {
-        tableItems.get(position).setNumberOfCustomer(String.valueOf(number));
-        getTotalCustomer();
+
+        OrderBody orderBody = new OrderBody();
 
         orderDetailFragment = new OrderDetailFragment();
+
+        orderBody.setTable_no(tableItems.get(position).getTableNo());
+        orderBody.setNumber_of_customer(number);
+        orderBody.setTakeaway("0");
+
+        Bundle b = new Bundle();
+
+        if (orderBody != null) {
+            b.putSerializable("orderBody", orderBody);
+            Log.e("orderBody", "is valid");
+        } else {
+            Log.e("orderBody", "is null");
+        }
+
+        orderDetailFragment.setArguments(b);
+
         replaceFragment(R.id.fragment_container, orderDetailFragment, true);
+
+    }
+
+    public void fetchOrderData(){
+        activity.showLoading(true);
+        listOrder.clear();
+        Call<OrderResponse> call = null;
+        call = activity.api.getAllOrder();
+
+        call.enqueue(new Callback<OrderResponse>() {
+            @Override
+            public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {
+
+                if (2 == response.code() / 100) {
+
+                    final OrderResponse orderResponse = response.body();
+                    Log.d("OrderResponse", "response = " + new Gson().toJson(orderResponse));
+
+                    List<Order> listemp = orderResponse.getOrders();
+                    for (Order orderResponseItem : listemp) {
+                        listOrder.add(orderResponseItem);
+                        for (Order table : tableItems) {
+                            if(orderResponseItem.getTableNo().equals(table.getTableNo())) {
+                                table.setTakeaway(orderResponseItem.getTakeaway());
+                                table.setCustomerName(orderResponseItem.getCustomerName());
+                                table.setNumberOfCustomer(orderResponseItem.getNumberOfCustomer());
+                                table.setOrderDate(orderResponseItem.getOrderDate());
+                                table.setOrderId(orderResponseItem.getOrderId());
+                                table.setOrderStatus(orderResponseItem.getOrderStatus());
+                                table.setOrderDetail(orderResponseItem.getOrderDetail());
+                            }
+                        }
+                    }
+                    activity.showLoading(false);
+                    adapter.notifyDataSetChanged();
+                    getTotalCustomer();
+
+                } else {
+                    Toast.makeText(activity.getApplicationContext(), "Cannot fetching data.", Toast.LENGTH_SHORT).show();
+                    activity.showLoading(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrderResponse> call, Throwable t) {
+                Toast.makeText(activity.getApplicationContext(), "Fail to fetching data.", Toast.LENGTH_SHORT).show();
+                Log.d("OrderResponse", t.getMessage()+t.getLocalizedMessage());
+                activity.showLoading(false);
+            }
+        });
     }
 
     public static class TableItemSpacingDecoration extends RecyclerView.ItemDecoration {

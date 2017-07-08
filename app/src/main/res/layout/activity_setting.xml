@@ -97,10 +97,10 @@
                     android:layout_centerInParent="false"
                     android:layout_toRightOf="@+id/imgMenu"
                     android:paddingLeft="15dp"
-                    android:paddingTop="5dp"
+                    android:paddingTop="2dp"
                     android:text="Menu"
                     android:textColor="@color/brown"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -147,10 +147,10 @@
                     android:layout_toEndOf="@+id/imageView12"
                     android:layout_toRightOf="@+id/imageView12"
                     android:paddingLeft="15dp"
-                    android:paddingTop="5dp"
+                    android:paddingTop="2dp"
                     android:text="Inventory"
                     android:textColor="@color/brown"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -225,10 +225,10 @@
                     android:layout_centerInParent="false"
                     android:layout_toRightOf="@+id/img_payment"
                     android:paddingLeft="15dp"
-                    android:paddingTop="5dp"
+                    android:paddingTop="2dp"
                     android:text="Payment Setting"
                     android:textColor="@color/brown"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -305,10 +305,10 @@
                     android:layout_centerInParent="false"
                     android:layout_toRightOf="@+id/img_user"
                     android:paddingLeft="15dp"
-                    android:paddingTop="5dp"
+                    android:paddingTop="2dp"
                     android:text="User"
                     android:textColor="@color/brown"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView

@@ -5,7 +5,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -19,11 +18,13 @@ import mamabe.posappandroid.Adapter.MenuCategoryTypeAdapter;
 import mamabe.posappandroid.Adapter.OrderMenuAdapter;
 import mamabe.posappandroid.Callbacks.OnActionbarListener;
 import mamabe.posappandroid.Fragments.Dialogs.AddOrderDialog;
+import mamabe.posappandroid.Fragments.Dialogs.UpdateOrderDialog;
 import mamabe.posappandroid.Models.Menu;
 import mamabe.posappandroid.Models.MenuCategory;
 import mamabe.posappandroid.Models.MenuCategoryResponse;
 import mamabe.posappandroid.Models.MenuResponse;
-import mamabe.posappandroid.Models.OrderDetailBody;
+import mamabe.posappandroid.Models.OrderBody;
+import mamabe.posappandroid.Models.OrderDetail;
 import mamabe.posappandroid.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,7 +37,8 @@ import retrofit2.Response;
 public class OrderMenuFragment extends BaseFragment implements View.OnClickListener, MenuCategoryAdapter.MenuCategoryAdapterListener
                                                             , MenuCategoryTypeAdapter.MenuTypeAdapterListener
                                                             , OrderMenuAdapter.MenuAdapterListener
-                                                            , AddOrderDialog.AddOrderDialogListener{
+                                                            , AddOrderDialog.AddOrderDialogListener
+                                                            , UpdateOrderDialog.UpdateOrderDialogListener {
 
     AddOrderActivity activity;
 
@@ -54,6 +56,8 @@ public class OrderMenuFragment extends BaseFragment implements View.OnClickListe
 
     private boolean isAdditional;
 
+    OrderBody orderBody;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +72,10 @@ public class OrderMenuFragment extends BaseFragment implements View.OnClickListe
         adapterType = new MenuCategoryTypeAdapter(menuTypeList, this, activity.getApplicationContext());
         adapterMenu = new OrderMenuAdapter(menuList, this, activity);
 
-        setAdditional(false);
+
+
+        orderBody = (OrderBody) activity.getIntent().getSerializableExtra("orderBody");
+
     }
 
     private void setupActionBar() {
@@ -145,6 +152,14 @@ public class OrderMenuFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void updateUI() {
         setupActionBar();
+        if(orderBody.getOrder_status().equalsIgnoreCase("")&&orderBody.getOrder_id()==null)
+        {
+            setAdditional(false);
+        }
+        else
+        {
+            setAdditional(true);
+        }
     }
 
     @Override
@@ -216,10 +231,10 @@ public class OrderMenuFragment extends BaseFragment implements View.OnClickListe
 
         if(menuType.equalsIgnoreCase("All"))
         {
-            call = activity.api.getMenuBy("", categoryName);
+            call = activity.api.getMenuByAvailability("", categoryName);
         }
         else{
-            call = activity.api.getMenuBy(menuType, categoryName);
+            call = activity.api.getMenuByAvailability(menuType, categoryName);
         }
 
 
@@ -339,34 +354,70 @@ public class OrderMenuFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     public void onItemClick(String menuId, int position) {
-        Menu menu = menuList.get(position);
+        int pos = 0;
+        boolean isInCart = false;
+        if(((AddOrderActivity)getActivity()).orderItemList.size()>0) {
+            Toast.makeText(activity, String.valueOf(((AddOrderActivity)getActivity()).orderItemList.size()) , Toast.LENGTH_SHORT).show();
+            for (OrderDetail item : ((AddOrderActivity) getActivity()).orderItemList) {
+                if (item.getMenu().getMenuId().equals(menuId)) {
+                    pos = ((AddOrderActivity) getActivity()).orderItemList.indexOf(item);
+                    isInCart = true;
+                }
+            }
+            if (isInCart) {
+                OrderDetail orderItem = ((AddOrderActivity) getActivity()).orderItemList.get(pos);
+                UpdateOrderDialog updateOrderDialog = new UpdateOrderDialog(true, true, this, orderItem, pos);
+                updateOrderDialog.show(activity.getSupportFragmentManager(), null);
+            } else {
+                Menu menu = menuList.get(position);
+                AddOrderDialog addOrderDialog = new AddOrderDialog(true, this, menu);
+                addOrderDialog.show(activity.getSupportFragmentManager(), null);
+            }
+        }else {
+            Menu menu = menuList.get(position);
+            AddOrderDialog addOrderDialog = new AddOrderDialog(true, this, menu);
+            addOrderDialog.show(activity.getSupportFragmentManager(), null);
 
-        AddOrderDialog addOrderDialog = new AddOrderDialog(true, this, menu);
-        addOrderDialog.show(activity.getSupportFragmentManager(),null);
+        }
+
     }
 
 
     @Override
-    public void onAddItem(Menu item, String qty, String note) {
-        OrderDetailBody order =  new OrderDetailBody();
-        order.setMenu(item);
-        order.setMenuStatus("1");
+    public void onAddItem(Menu item, String qty, String note, String takeaway) {
+        OrderDetail orderDetail =  new OrderDetail();
+        orderDetail.setMenu(item);
+        orderDetail.setMenuStatus("1");
         if(!isAdditional)
         {
-            order.setAdditional("0");
+            orderDetail.setAdditional("0");
         }
         else
         {
-            order.setAdditional("1");
-            order.setOrderId("1");
+            orderDetail.setAdditional("1");
+            orderDetail.setOrderId("1");
         }
-        order.setNote(note);
-        order.setQty(qty);
+        orderDetail.setNote(note);
+        orderDetail.setQty(qty);
+        orderDetail.setTakeaway(takeaway);
 
-        activity.onAddItemToCart(order);
+        activity.onAddItemToCart(orderDetail);
     }
 
     public void setAdditional(boolean additional){
         isAdditional = additional;
+    }
+
+    @Override
+    public void onUpdateItem(OrderDetail orderItem, String qty, String note, int position, String takeaway) {
+        ((AddOrderActivity)getActivity()).orderItemList.get(position).setQty(qty);
+        ((AddOrderActivity)getActivity()).orderItemList.get(position).setNote(note);
+        ((AddOrderActivity)getActivity()).orderItemList.get(position).setTakeaway(takeaway);
+        activity.notifyCart();
+    }
+
+    @Override
+    public void onItemDelete(int position) {
+
     }
 }

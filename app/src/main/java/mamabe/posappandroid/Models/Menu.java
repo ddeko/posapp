@@ -30,12 +30,16 @@ public class Menu implements Serializable
     @SerializedName("discount")
     @Expose
     private String discount;
+    @SerializedName("flag_delete")
+    @Expose
+    private String flagDelete;
     @SerializedName("menuCategory_name")
     @Expose
     private String menuCategoryName;
     @SerializedName("menu_type")
     @Expose
     private String menuType;
+
 
     public String getMenuId() {
         return menuId;
@@ -77,6 +81,22 @@ public class Menu implements Serializable
         this.availability = availability;
     }
 
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
+    }
+
+    public String getFlagDelete() {
+        return flagDelete;
+    }
+
+    public void setFlagDelete(String flagDelete) {
+        this.flagDelete = flagDelete;
+    }
+
     public String getMenuCategoryName() {
         return menuCategoryName;
     }
@@ -91,13 +111,5 @@ public class Menu implements Serializable
 
     public void setMenuType(String menuType) {
         this.menuType = menuType;
-    }
-
-    public String getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(String discount) {
-        this.discount = discount;
     }
 }

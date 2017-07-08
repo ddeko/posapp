@@ -1,33 +1,30 @@
 package mamabe.posappandroid.Activities;
 
+import android.app.Activity;
 import android.graphics.drawable.GradientDrawable;
 import android.support.design.widget.TabLayout;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import mamabe.posappandroid.Callbacks.OnActionbarListener;
-import mamabe.posappandroid.Fragments.Dialogs.AddOrderDialog;
-import mamabe.posappandroid.Fragments.MenuFragment;
+import mamabe.posappandroid.Fragments.Dialogs.ConfirmDialog;
 import mamabe.posappandroid.Fragments.OrderCartFragment;
 import mamabe.posappandroid.Fragments.OrderMenuFragment;
-import mamabe.posappandroid.Models.Menu;
-import mamabe.posappandroid.Models.OrderDetailBody;
+import mamabe.posappandroid.Models.OrderDetail;
 import mamabe.posappandroid.R;
 
-public class AddOrderActivity extends BaseActivity {
+public class AddOrderActivity extends BaseActivity implements ConfirmDialog.ConfirmDialogListener{
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -38,10 +35,12 @@ public class AddOrderActivity extends BaseActivity {
     OrderCartFragment orderCartFragment;
     OrderMenuFragment orderMenuFragment;
 
-    public ArrayList<OrderDetailBody> orderItemList;
+    public ArrayList<OrderDetail> orderItemList;
+
+    ConfirmDialog confirmDialog;
 
     public interface SendCartData {
-        void onAddData(ArrayList<OrderDetailBody> orderItemList);
+        void onAddData(ArrayList<OrderDetail> orderItemList);
     }
 
     public SendCartData sendCartData;
@@ -54,9 +53,6 @@ public class AddOrderActivity extends BaseActivity {
         setActionBarTitle("Order Station");
 
         orderItemList = new ArrayList<>();
-
-//        sendCartData.onAddData(orderItemList);
-
 
 
     }
@@ -133,6 +129,25 @@ public class AddOrderActivity extends BaseActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        confirmDialog = new ConfirmDialog(true, this);
+        confirmDialog.setButtonsCaption("No", "Cancel Order");
+        confirmDialog.setTitleAndComment("Cancel Order", "Do you want to cancel this order ?");
+        confirmDialog.show(getSupportFragmentManager(), null);
+
+    }
+
+    @Override
+    public void onYesClick() {
+        this.finish();
+    }
+
+    @Override
+    public void onNoClick() {
+        confirmDialog.dismiss();
+    }
+
+    @Override
     public int getLayout() {
         return R.layout.activity_add_order;
     }
@@ -142,12 +157,16 @@ public class AddOrderActivity extends BaseActivity {
 
     }
 
-    public void onAddItemToCart(OrderDetailBody orderDetailBody)
+    public void onAddItemToCart(OrderDetail orderDetail)
     {
-        orderItemList.add(orderDetailBody);
+        orderItemList.add(orderDetail);
         count2.setText(String.valueOf(orderItemList.size()));
         orderCartFragment.notifyAdapter();
 //        sendCartData.onAddData(orderItemList);
+    }
+
+    public void notifyCart(){
+        orderCartFragment.notifyAdapter();
     }
 
 

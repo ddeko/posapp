@@ -1,5 +1,6 @@
 package mamabe.posappandroid.Fragments.Dialogs;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,7 +13,9 @@ import android.widget.TextView;
 import mamabe.posappandroid.R;
 
 
-public abstract class ConfirmDialog extends DialogFragment {
+
+@SuppressLint("ValidFragment")
+public class ConfirmDialog extends DialogFragment {
     private TextView cancelBtn;
     private TextView confirmText;
     private TextView titleCaption;
@@ -26,14 +29,22 @@ public abstract class ConfirmDialog extends DialogFragment {
     private String rightButtonCaption;
     private boolean cancelOnTouchOutside;
 
+    public interface ConfirmDialogListener {
+        void onYesClick();
+        void onNoClick();
+    }
+
+    ConfirmDialogListener listener;
+
     public ConfirmDialog() {
         super();
     }
 
-    public ConfirmDialog(boolean cancelOnTouchOutside) {
+    public ConfirmDialog(boolean cancelOnTouchOutside, ConfirmDialogListener listener) {
         this.leftButtonCaption = "No";
         this.rightButtonCaption = "Yes";
         this.cancelOnTouchOutside = cancelOnTouchOutside;
+        this.listener = listener;
     }
 
     public void setTitleAndComment(String title, String comment) {
@@ -72,7 +83,7 @@ public abstract class ConfirmDialog extends DialogFragment {
         yesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onYesClick();
+                listener.onYesClick();
                 dismiss();
             }
         });
@@ -80,7 +91,7 @@ public abstract class ConfirmDialog extends DialogFragment {
         noBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onNoClick();
+                listener.onNoClick();
                 dismiss();
             }
         });
@@ -107,6 +118,5 @@ public abstract class ConfirmDialog extends DialogFragment {
         super.dismiss();
     }
 
-    protected abstract void onYesClick();
-    protected abstract void onNoClick();
+
 }

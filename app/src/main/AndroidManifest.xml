@@ -11,26 +11,28 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:hardwareAccelerated="false"
+        android:hardwareAccelerated="true"
         android:largeHeap="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.LoginActivity" >
+        <activity android:name=".Activities.LoginActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.HomeActivity" />
-        <activity android:name=".Activities.SettingActivity" />
-        <activity android:name=".Activities.UserSettingActivity" />
-        <activity android:name=".Activities.PaymentSettingActivity" />
-        <activity android:name=".Activities.MenuSettingActivity" />
-        <activity android:name=".Activities.OrderActivity" />
+        <activity android:name=".Activities.HomeActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.SettingActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.UserSettingActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.PaymentSettingActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.MenuSettingActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.OrderActivity" android:screenOrientation="portrait"/>
         <activity
             android:name=".Activities.AddOrderActivity"
             android:label="@string/title_activity_add_order"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

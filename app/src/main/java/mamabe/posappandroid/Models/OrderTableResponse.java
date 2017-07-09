@@ -12,23 +12,23 @@ import java.util.ArrayList;
 
 public class OrderTableResponse implements Serializable
 {
-    @SerializedName("orders")
+    @SerializedName("order_details")
     @Expose
-    private Order orders = null;
+    private ArrayList<OrderDetail> orderDetails = null;
     @SerializedName("status")
     @Expose
     private Integer status;
     @SerializedName("message")
     @Expose
     private String message;
-    private final static long serialVersionUID = -110636907896083284L;
+    private final static long serialVersionUID = -3611334957056877764L;
 
-    public Order getOrders() {
-        return orders;
+    public ArrayList<OrderDetail> getOrderDetails() {
+        return orderDetails;
     }
 
-    public void setOrders(Order orders) {
-        this.orders = orders;
+    public void setOrderDetails(ArrayList<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
     }
 
     public Integer getStatus() {

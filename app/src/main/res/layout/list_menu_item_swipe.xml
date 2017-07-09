@@ -56,30 +56,30 @@
             android:id="@+id/list_menu_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="French Fries"
-            android:textColor="@color/brown"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/list_menu_text_disc"
             android:layout_marginRight="26dp"
             android:layout_marginTop="0dp"
-            app:layout_constraintHorizontal_bias="1.0" />
+            android:text="French Fries"
+            android:textColor="@color/brown"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/list_menu_text_disc"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/list_menu_text_disc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="0dp"
             android:text="Disc"
             android:textColor="@color/brown"
             android:textSize="12sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/list_menu_disc"
-            android:layout_marginTop="0dp"
             app:layout_constraintHorizontal_bias="0.75"
-            android:layout_marginRight="0dp"
-            app:layout_constraintRight_toLeftOf="@+id/list_menu_available" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/list_menu_available"
+            app:layout_constraintTop_toTopOf="@+id/list_menu_disc" />
 
         <TextView
             android:id="@+id/list_menu_disc"

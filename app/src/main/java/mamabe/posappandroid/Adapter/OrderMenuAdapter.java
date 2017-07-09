@@ -3,6 +3,7 @@ package mamabe.posappandroid.Adapter;
 import android.graphics.Paint;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,6 +81,10 @@ public class OrderMenuAdapter extends RecyclerView.Adapter<OrderMenuAdapter.View
         TextView tvDisc = (TextView)v.findViewById(R.id.list_menu_text_disc);
         ConstraintLayout item = (ConstraintLayout)v.findViewById(R.id.list_menu_item);
 
+        name.setSelected(true);
+        name.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        name.setSingleLine(true);
+
         return new ViewHolder(v, disc, name, price, discPrice, tvDisc, item);
     }
 
@@ -104,6 +109,7 @@ public class OrderMenuAdapter extends RecyclerView.Adapter<OrderMenuAdapter.View
             holder.disc.setVisibility(View.GONE);
             holder.tvDisc.setVisibility(View.GONE);
             holder.discPrice.setVisibility(View.GONE);
+            holder.price.setPaintFlags(0);
         }
         else
         {

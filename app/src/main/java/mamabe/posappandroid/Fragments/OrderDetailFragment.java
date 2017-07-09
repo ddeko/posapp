@@ -1,9 +1,11 @@
 package mamabe.posappandroid.Fragments;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -13,31 +15,43 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daimajia.swipe.SwipeLayout;
+import com.google.gson.Gson;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import mamabe.posappandroid.Activities.AddOrderActivity;
 import mamabe.posappandroid.Activities.OrderActivity;
+import mamabe.posappandroid.Adapter.OrderDetailAdapter;
 import mamabe.posappandroid.Application.Config;
 import mamabe.posappandroid.Callbacks.OnActionbarListener;
 import mamabe.posappandroid.Models.OrderBody;
+import mamabe.posappandroid.Models.OrderDetail;
+import mamabe.posappandroid.Models.OrderTableResponse;
 import mamabe.posappandroid.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by DedeEko on 6/19/2017.
  */
 
-public class OrderDetailFragment extends BaseFragment implements View.OnClickListener {
+public class OrderDetailFragment extends BaseFragment implements View.OnClickListener, OrderDetailAdapter.OrderDetailAdapterListener {
 
     private OrderActivity activity;
 
-    private RecyclerView listOrder;
+    private GridLayoutManager layoutManager;
+    private OrderDetailAdapter adapter;
+
+    private RecyclerView listOrderItem;
     private TextView tvGuestName;
     private TextView tvTableNumber;
     private TextView tvTotalGuest;
@@ -51,11 +65,16 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
     private Calendar c;
 
     Bundle bundle;
-    private String subTotal;
+    private String subTotals;
 
     String datetime;
 
     OrderBody orderBody;
+
+    public ArrayList<OrderDetail> orderItems;
+
+    DecimalFormatSymbols symbols;
+    DecimalFormat decimalFormat;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +91,11 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
 
         orderBody = (OrderBody) bundle.getSerializable("orderBody");
 
+        orderItems =  new ArrayList<>();
+        adapter = new OrderDetailAdapter(orderItems, this, activity.getApplicationContext());
+
+
+
     }
 
     private void setupActionBar() {
@@ -85,7 +109,7 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     public void initView(View view) {
-        listOrder = (RecyclerView) view.findViewById(R.id.order_detail_list);
+        listOrderItem = (RecyclerView) view.findViewById(R.id.order_detail_list);
         tvGuestName = (TextView)view.findViewById(R.id.order_detail_customer_name);
         tvTableNumber = (TextView)view.findViewById(R.id.order_detail_table_number);
         tvTotalGuest = (TextView)view.findViewById(R.id.order_detail_total_customer);
@@ -97,13 +121,20 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
 
         btnAddOrder.setOnClickListener(this);
 
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        listOrderItem.setHasFixedSize(false);
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity().getApplicationContext());
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        listOrderItem.setLayoutManager(llm);
+        listOrderItem.setAdapter(adapter);
+
+        symbols = new DecimalFormatSymbols();
         symbols.setGroupingSeparator(',');
         symbols.setDecimalSeparator('.');
-        DecimalFormat decimalFormat = new DecimalFormat("#,###.00", symbols);
-        subTotal = decimalFormat.format(00);
+        decimalFormat = new DecimalFormat("#,###.00", symbols);
 
-        tvSubTotal.setText(subTotal);
+        subTotals = decimalFormat.format(0);
+
+        tvSubTotal.setText(subTotals);
         tvTotalItem.setText("0 Items");
     }
 
@@ -152,6 +183,7 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
 //            Log.d("OrderResponsdasdadae", formattedDates +" "  + " " +orderBody.getOrder_date() );
 //            tvOrderDate.setText(formattedDates);
             datetime = orderBody.getOrder_date();
+            fetchData(orderBody.getOrder_id());
         }
 
 
@@ -166,7 +198,7 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
         tvTotalGuest.setText(orderBody.getNumber_of_customer());
 
 
-        }
+    }
 
     @Override
     public void onResume() {
@@ -218,4 +250,63 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
         datetime = String.valueOf(mYear)+"-"+ String.valueOf(mMonth) +"-"+String.valueOf(mDay) + " "
                 + String.valueOf(hour) + ":" +String.valueOf(minute) + ":" +String.valueOf(ss);
     }
+
+    public void fetchData(String orderId){
+        activity.showLoading(true);
+
+        Call<OrderTableResponse> call = null;
+        call = activity.api.getOrderDetailbyId(orderId);
+
+        call.enqueue(new Callback<OrderTableResponse>() {
+            @Override
+            public void onResponse(Call<OrderTableResponse> call, Response<OrderTableResponse> response) {
+
+                if (2 == response.code() / 100) {
+
+                    final OrderTableResponse orderTableResponse = response.body();
+                    Log.d("OrderResponse", "response = " + new Gson().toJson(orderTableResponse));
+
+                    float total= 0 ;
+                    List<OrderDetail> listemp = orderTableResponse.getOrderDetails();
+                    orderItems.clear();
+                    for (OrderDetail orderResponseItem : listemp) {
+                        orderItems.add(orderResponseItem);
+                        if(orderResponseItem.getMenu().getDiscount().equalsIgnoreCase("0"))
+                        {
+                            float totalPrice = Integer.parseInt(orderResponseItem.getQty())*Integer.parseInt(orderResponseItem.getMenu().getPrice());
+                            total = total + totalPrice;
+                        }
+                        else{
+                            float discount = (100 - Float.parseFloat(orderResponseItem.getMenu().getDiscount()));
+                            float priceDisc = (Integer.parseInt(orderResponseItem.getMenu().getPrice())*discount)/100;
+                            float totalPrice = (Integer.parseInt(orderResponseItem.getQty())*priceDisc);
+                            total = total + totalPrice;
+                        }
+                    }
+                    activity.showLoading(false);
+
+                    adapter.notifyDataSetChanged();
+                    subTotals = decimalFormat.format(total);
+                    tvSubTotal.setText(subTotals);
+                    tvTotalItem.setText(String.valueOf(adapter.getItemCount()));
+                } else {
+                    Toast.makeText(activity.getApplicationContext(), "Cannot fetching data.", Toast.LENGTH_SHORT).show();
+                    activity.showLoading(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrderTableResponse> call, Throwable t) {
+                Toast.makeText(activity.getApplicationContext(), "Fail to fetching data.", Toast.LENGTH_SHORT).show();
+                Log.d("OrderResponse", t.getMessage()+t.getLocalizedMessage());
+                activity.showLoading(false);
+            }
+        });
+    }
+
+    @Override
+    public void onItemClick(OrderDetail item, int position) {
+
+    }
+
 }

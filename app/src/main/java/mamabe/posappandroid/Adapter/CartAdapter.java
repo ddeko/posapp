@@ -2,6 +2,7 @@ package mamabe.posappandroid.Adapter;
 
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,6 +80,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
         LinearLayout item = (LinearLayout)v.findViewById(R.id.list_cart_item);
 
 
+        name.setSelected(true);
+        name.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        name.setSingleLine(true);
+
+        note.setSelected(true);
+        note.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        note.setSingleLine(true);
+
         return new ViewHolder(v, name, disc, price, discPrice, tvDisc, qty, note, tvNote, item);
     }
 
@@ -112,6 +121,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
             holder.disc.setVisibility(View.GONE);
             holder.tvDisc.setVisibility(View.GONE);
             holder.discPrice.setVisibility(View.GONE);
+            holder.price.setPaintFlags(0);
         }
         else
         {

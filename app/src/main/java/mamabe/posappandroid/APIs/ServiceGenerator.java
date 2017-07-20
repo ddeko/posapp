@@ -37,7 +37,7 @@ public class ServiceGenerator {
         //okHttpClient.networkInterceptors().add(new StethoInterceptor());
 
         Retrofit builder = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BASE_URL2)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(okHttpClient)
                 .build();

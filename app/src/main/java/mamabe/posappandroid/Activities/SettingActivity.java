@@ -12,7 +12,7 @@ import mamabe.posappandroid.R;
 
 public class SettingActivity extends BaseActivity implements View.OnClickListener{
 
-    RelativeLayout btnMenu, btnInvent, btnPayment, btnUser;
+    RelativeLayout btnMenu, btnPayment, btnUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,12 +29,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         btnMenu = (RelativeLayout) findViewById(R.id.btn_menu);
-        btnInvent = (RelativeLayout) findViewById(R.id.btn_inventory);
         btnPayment = (RelativeLayout) findViewById(R.id.btn_payment);
         btnUser = (RelativeLayout) findViewById(R.id.btn_user);
 
         btnMenu.setOnClickListener(this);
-        btnInvent.setOnClickListener(this);
         btnPayment.setOnClickListener(this);
         btnUser.setOnClickListener(this);
     }
@@ -65,10 +63,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         {
             Intent i = new Intent(SettingActivity.this, PaymentSettingActivity.class);
             startActivity(i);
-        }
-        else if(v ==btnInvent)
-        {
-
         }
         else if(v ==btnMenu)
         {

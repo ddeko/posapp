@@ -1,5 +1,6 @@
 package mamabe.posappandroid.Fragments;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import mamabe.posappandroid.Activities.KitchenActivity;
 import mamabe.posappandroid.Activities.MenuSettingActivity;
 import mamabe.posappandroid.Activities.OrderActivity;
 import mamabe.posappandroid.Adapter.ListTableAdapter;
@@ -100,7 +102,8 @@ public class ListTableFragment extends BaseFragment implements View.OnClickListe
 
             @Override
             public void onRightIconClick() {
-
+                Intent i = new Intent(activity.getApplicationContext(), KitchenActivity.class);
+                startActivity(i);
             }
         });
     }

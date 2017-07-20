@@ -152,6 +152,13 @@ public class UpdateOrderDialog extends DialogFragment {
             btnDelete.setVisibility(View.VISIBLE);
             btnAddItem.setText("Save");
         }
+
+        if(orderItem.getTakeaway().equalsIgnoreCase("0")) {
+            radioGroup.check(rdDineIn.getId());
+        }
+        else{
+            radioGroup.check(rdTakeaway.getId());
+        }
     }
 
     @Override

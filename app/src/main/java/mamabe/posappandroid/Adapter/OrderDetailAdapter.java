@@ -31,7 +31,8 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     public static final String MENUSTATUS_CONFIRMATION_CODE = "1";
     public static final String MENUSTATUS_COOKING_CODE = "2";
     public static final String MENUSTATUS_COOKED_CODE = "3";
-    public static final String MENUSTATUS_DELIVERED_CODE = "4";
+    public static final String MENUSTATUS_DELIVERING_CODE = "4";
+    public static final String MENUSTATUS_DELIVERED_CODE = "5";
 
     private Context context;
     private ArrayList<OrderDetail> items;
@@ -167,9 +168,11 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
         if(orderitems.getMenuStatus().equals(MENUSTATUS_CONFIRMATION_CODE)) {
             holder.menuStatusColor.setBackgroundColor(context.getResources().getColor(R.color.red4));
         }else if(orderitems.getMenuStatus().equals(MENUSTATUS_COOKING_CODE)){
-            holder.menuStatusColor.setBackgroundColor(context.getResources().getColor(R.color.orange1));
+            holder.menuStatusColor.setBackgroundColor(context.getResources().getColor(R.color.fbutton_color_orange));
         }else if(orderitems.getMenuStatus().equals(MENUSTATUS_COOKED_CODE)){
             holder.menuStatusColor.setBackgroundColor(context.getResources().getColor(R.color.blue6));
+        }else if(orderitems.getMenuStatus().equals(MENUSTATUS_DELIVERING_CODE)){
+            holder.menuStatusColor.setBackgroundColor(context.getResources().getColor(R.color.yellow1));
         }else if(orderitems.getMenuStatus().equals(MENUSTATUS_DELIVERED_CODE)){
             holder.menuStatusColor.setBackgroundColor(context.getResources().getColor(R.color.green1));
         }

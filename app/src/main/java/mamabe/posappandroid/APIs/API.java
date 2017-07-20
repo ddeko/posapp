@@ -117,30 +117,9 @@ public interface API {
     @GET("getOrderDetailbyId")
     Call<OrderTableResponse>
     getOrderDetailbyId(@Query("order_id") String order_id);
-//    //Penyakit
-//    @GET("penyakitall/{page}/{count_page}")
-//    Call<DiseaseResponse>
-//    getDiseaseList(@Path("page") String page, @Path("count_page") String count_page);
-//
-//    @GET("penyakit/{page}/{count_page}")
-//    Call<DiseaseResponse>
-//    getDiseaseListByLokasi(@Path("page") String page, @Path("count_page") String count_page, @Query("id_desa") String id_desa);
-//
-//    @POST("penyakit")
-//    Call<DiseasePostResponse>
-//    postDisease(@Body DiseaseBody diseaseBody);
-//    @DELETE("penyakit")
-//    Call<DeletePenyakitResponse> deletePenyakit(@Query("Id_penyakit") String id_penyakit);
-//
-//    @PUT("penyakit")
-//    Call<PutPenyakitResponse> editPenyakit(@Query("Id_penyakit") String id_penyakit,
-//                                           @Body PutPenyakitBody putPenyakitBody);
-//
-//    @GET("tipepenyakit/{page}/{count_page}")
-//    Call<TipePenyakitResponse>
-//    getTipePenyakitList(@Path("page") String page, @Path("count_page") String count_page);
-//
-//    @POST("multimedia")
-//    Call<MultimediaPostResponse>
-//    postMultimedia(@Body MultimediaBody multimediaBody);
+
+    @GET("getOrderDetailbyStatus")
+    Call<OrderTableResponse>
+    getOrderDetailbyStatus(@Query("menu_status") String menu_status);
+
 }

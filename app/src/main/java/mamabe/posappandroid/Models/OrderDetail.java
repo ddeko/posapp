@@ -11,6 +11,9 @@ import java.io.Serializable;
 
 public class OrderDetail implements Serializable{
 
+    @SerializedName("table_no")
+    @Expose
+    private String table_no;
     @SerializedName("orderdetail_id")
     @Expose
     private String orderDetailId;
@@ -35,6 +38,14 @@ public class OrderDetail implements Serializable{
     @SerializedName("takeaway")
     @Expose
     private String takeaway;
+
+    public String getTable_no() {
+        return table_no;
+    }
+
+    public void setTable_no(String table_no) {
+        this.table_no = table_no;
+    }
 
     public String getTakeaway() {
         return takeaway;

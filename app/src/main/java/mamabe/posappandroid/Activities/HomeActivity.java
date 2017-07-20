@@ -22,7 +22,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRightIcon(R.drawable.orderstatus);
+        setRightIcon(0);
         setLeftIcon(R.drawable.ic_exit_to_app_white_24dp);
         setActionBarTitleCenter("mamabe");
     }
@@ -86,7 +86,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
         }
         else if(v ==btnExpend)
         {
-
+            Intent i = new Intent(HomeActivity.this, KitchenActivity.class);
+            startActivity(i);
         }
         else if(v ==btnOrder)
         {

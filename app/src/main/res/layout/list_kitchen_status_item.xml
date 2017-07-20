@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list_kitchen_status_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardBackgroundColor="@color/softbrownARGB"
+    card_view:cardCornerRadius="2dp"
+    card_view:cardUseCompatPadding="true">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/softbrownARGB"
+            android:padding="7dp"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintHorizontal_weight="0.95"
+            card_view:layout_constraintLeft_toLeftOf="parent"
+            card_view:layout_constraintRight_toLeftOf="@+id/kitchen_status_item_status_color"
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:layout_constraintVertical_bias="1.0">
+
+            <LinearLayout
+                android:id="@+id/linearLayout7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal"
+                card_view:layout_constraintLeft_toLeftOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/kitchen_status_item_takeaway"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="*)take away"
+                    android:textColor="@color/brown"
+                    android:textSize="12sp"
+                    android:textStyle="bold|italic" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/kitchen_status_item_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="3dp"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:text="Croissant"
+                android:textColor="@color/actionbar_dark_color"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                card_view:layout_constraintLeft_toRightOf="@+id/kitchen_status_item_count"
+                card_view:layout_constraintRight_toRightOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/linearLayout7" />
+
+            <TextView
+                android:id="@+id/kitchen_status_item_table"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="0dp"
+                android:elevation="0dp"
+                android:gravity="center"
+                android:text="Table : 5"
+                android:textColor="@color/brown"
+                android:textSize="14sp"
+                card_view:layout_constraintRight_toRightOf="@+id/kitchen_status_item_note_holder"
+                card_view:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/kitchen_status_item_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="0dp"
+                android:gravity="center"
+                android:text="2 X "
+                android:textColor="@color/actionbar_dark_color"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                card_view:layout_constraintLeft_toLeftOf="parent"
+                card_view:layout_constraintTop_toTopOf="@+id/kitchen_status_item_name" />
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/kitchen_status_item_note_holder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="2dp"
+                card_view:layout_constraintLeft_toLeftOf="parent"
+                card_view:layout_constraintRight_toRightOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/kitchen_status_item_name">
+
+
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/actionbar_color"
+                    android:orientation="horizontal"
+                    card_view:layout_constraintLeft_toLeftOf="parent"
+                    card_view:layout_constraintRight_toRightOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent"></LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView36"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:text="note :"
+                    android:textColor="@color/brown"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    card_view:layout_constraintLeft_toLeftOf="parent"
+                    card_view:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+                <TextView
+                    android:id="@+id/kitchen_status_item_note"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginStart="4dp"
+                    android:ellipsize="marquee"
+                    android:padding="2dp"
+                    android:singleLine="true"
+                    android:text="White Cream, Less Sugar"
+                    android:textColor="@color/brown"
+                    android:textSize="13sp"
+                    card_view:layout_constraintHorizontal_bias="0.0"
+                    card_view:layout_constraintLeft_toRightOf="@+id/textView36"
+                    card_view:layout_constraintRight_toRightOf="parent"
+                    tools:layout_editor_absoluteY="1dp" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/kitchen_status_item_status_color"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/red2"
+            android:elevation="1dp"
+            card_view:layout_constraintBottom_toBottomOf="@+id/constraintLayout4"
+            card_view:layout_constraintHorizontal_weight="0.05"
+            card_view:layout_constraintLeft_toRightOf="@+id/constraintLayout4"
+            card_view:layout_constraintRight_toRightOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent">
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

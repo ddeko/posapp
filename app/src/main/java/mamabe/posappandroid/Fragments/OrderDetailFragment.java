@@ -1,5 +1,6 @@
 package mamabe.posappandroid.Fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.google.gson.Gson;
+import com.google.gson.internal.Streams;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -28,6 +30,7 @@ import java.util.List;
 import java.util.Locale;
 
 import mamabe.posappandroid.Activities.AddOrderActivity;
+import mamabe.posappandroid.Activities.KitchenActivity;
 import mamabe.posappandroid.Activities.OrderActivity;
 import mamabe.posappandroid.Adapter.OrderDetailAdapter;
 import mamabe.posappandroid.Application.Config;
@@ -46,9 +49,10 @@ import retrofit2.Response;
 
 public class OrderDetailFragment extends BaseFragment implements View.OnClickListener, OrderDetailAdapter.OrderDetailAdapterListener {
 
+    private static final int ADDORDER_REQUEST_CODE = 2;
+
     private OrderActivity activity;
 
-    private GridLayoutManager layoutManager;
     private OrderDetailAdapter adapter;
 
     private RecyclerView listOrderItem;
@@ -148,7 +152,8 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
 
             @Override
             public void onRightIconClick() {
-
+                Intent i = new Intent(activity.getApplicationContext(), KitchenActivity.class);
+                startActivity(i);
             }
         });
     }
@@ -161,7 +166,7 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
         {
             String formattedDate = dateFormatter.format(c.getTime());
             getDate();
-            tvOrderDate.setText(datetime);
+            tvOrderDate.setText(datetime+ ":00");
 
 
         }
@@ -223,13 +228,20 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
 
         if(view==btnAddOrder)
         {
-            orderBody.setCustomer_name(tvGuestName.getText().toString());
-            orderBody.setOrder_date(datetime);
-            orderBody.setOrder_status("");
-            Intent i = new Intent(activity.getApplicationContext(), AddOrderActivity.class);
+            if(tvGuestName.getText().toString().equalsIgnoreCase(""))
+            {
+                Toast.makeText(activity, "Please input guest name", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                orderBody.setCustomer_name(tvGuestName.getText().toString());
+                orderBody.setOrder_date(tvOrderDate.getText().toString());
+                orderBody.setOrder_status("");
+                Intent i = new Intent(activity.getApplicationContext(), AddOrderActivity.class);
 
-            i.putExtra("orderBody", orderBody);
-            startActivity(i);
+                i.putExtra("orderBody", orderBody);
+                startActivityForResult(i, ADDORDER_REQUEST_CODE);
+
+            }
         }
 
     }
@@ -247,8 +259,13 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
         int minute = c.get(Calendar.MINUTE);
         int ss = c.get(Calendar.MILLISECOND);
 
+        String ms = String.valueOf(ss);
+        String msSbtr = ms.substring(0,2);
+
         datetime = String.valueOf(mYear)+"-"+ String.valueOf(mMonth) +"-"+String.valueOf(mDay) + " "
-                + String.valueOf(hour) + ":" +String.valueOf(minute) + ":" +String.valueOf(ss);
+                + String.valueOf(hour) + ":" +String.valueOf(minute);
+
+
     }
 
     public void fetchData(String orderId){
@@ -309,4 +326,24 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == ADDORDER_REQUEST_CODE){
+            if(resultCode!= Activity.RESULT_OK){
+
+                return;
+            }
+            else{
+                if(data != null) {
+                    Bundle extras = data.getExtras();
+                    String order_id = extras.get("order_id").toString();
+                    orderBody.setOrder_id(order_id);
+
+                    fetchData(order_id);
+
+                }
+            }
+        }
+    }
 }

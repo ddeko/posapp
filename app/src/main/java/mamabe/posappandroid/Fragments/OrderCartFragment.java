@@ -1,5 +1,7 @@
 package mamabe.posappandroid.Fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -108,6 +110,7 @@ public class OrderCartFragment extends BaseFragment implements AddOrderActivity.
     public void updateUI() {
         setupActionBar();
         adapter.notifyDataSetChanged();
+        Log.d("OrderDetail", "date3 = " +order.getOrder_date());
     }
 
     @Override
@@ -146,13 +149,14 @@ public class OrderCartFragment extends BaseFragment implements AddOrderActivity.
         if(order.getOrder_status().equalsIgnoreCase("")&&order.getOrder_id()==null)
         {
             order.setOrder_status("unfinished");
+            Log.d("OrderDetail", "date2 = " +order.getOrder_date());
+
             insertOrder(order);
         }
         else
         {
             insertOrderDetail();
         }
-        activity.finish();
     }
 
     @Override
@@ -231,7 +235,7 @@ public class OrderCartFragment extends BaseFragment implements AddOrderActivity.
         Call<OrderPostResponse> call = null;
 
         call = activity.api.postOrder(orderBody);
-
+        Log.d("OrderDetail", "date1 = " +orderBody.getOrder_date());
         call.enqueue(new Callback<OrderPostResponse>() {
             @Override
             public void onResponse(Call<OrderPostResponse> call, Response<OrderPostResponse> response) {
@@ -244,8 +248,10 @@ public class OrderCartFragment extends BaseFragment implements AddOrderActivity.
 
                     order.setOrder_id(postResponse.getOrder_id());
 
-                    insertOrderDetail();
+
                     activity.showLoading(false);
+                    insertOrderDetail();
+
 
                 } else {
                     Toast.makeText(activity.getApplicationContext(), "Cannot insert data", Toast.LENGTH_SHORT).show();
@@ -274,6 +280,15 @@ public class OrderCartFragment extends BaseFragment implements AddOrderActivity.
             orderDetailBody.setTakeaway(Item.getTakeaway());
             insertData(orderDetailBody);
         }
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("order_id",order.getOrder_id());
+        if (activity.getParent() == null) {
+            activity.setResult(Activity.RESULT_OK, resultIntent);
+        }
+        else {
+            activity.getParent().setResult(Activity.RESULT_OK, resultIntent);
+        }
+        activity.finish();
     }
 
 

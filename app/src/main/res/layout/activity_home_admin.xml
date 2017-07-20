@@ -52,10 +52,11 @@
             android:layout_alignParentRight="false"
             android:layout_centerHorizontal="false"
             android:layout_centerVertical="true"
+            android:padding="11dp"
             android:scaleX="1.1"
             android:scaleY="1.1"
             android:tint="#85471E"
-            app:srcCompat="@drawable/expend" />
+            app:srcCompat="@drawable/orderstatus" />
 
         <TextView
             android:id="@+id/textView5"
@@ -67,9 +68,9 @@
             android:layout_marginRight="15dp"
             android:layout_toLeftOf="@+id/imageView11"
             android:layout_toRightOf="@+id/imageView10"
-            android:text="Expenditure"
+            android:text="Kitchen Station"
             android:textColor="#85471E"
-            android:textSize="26sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <ImageView
@@ -128,7 +129,7 @@
             android:layout_toRightOf="@+id/imageView8"
             android:text="Report"
             android:textColor="#85471E"
-            android:textSize="26sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <ImageView
@@ -189,7 +190,7 @@
             android:layout_toRightOf="@+id/imageView6"
             android:text="Setting"
             android:textColor="#85471E"
-            android:textSize="26sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <ImageView
@@ -247,7 +248,7 @@
             android:layout_toRightOf="@+id/imageView4"
             android:text="Order Station"
             android:textColor="#85471E"
-            android:textSize="26sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <ImageView

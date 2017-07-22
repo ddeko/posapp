@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import mamabe.posappandroid.R;
 
 public class KitchenStatusAdapter extends RecyclerView.Adapter<KitchenStatusAdapter.ViewHolder>{
 
+    public static final String MENUSTATUS_NOTCONFIRM_CODE = "101";
     public static final String MENUSTATUS_CONFIRMATION_CODE = "1";
     public static final String MENUSTATUS_COOKING_CODE = "2";
     public static final String MENUSTATUS_COOKED_CODE = "3";
@@ -114,6 +116,8 @@ public class KitchenStatusAdapter extends RecyclerView.Adapter<KitchenStatusAdap
             holder.menuStatusColor.setBackgroundColor(context.getResources().getColor(R.color.yellow1));
         }else if(orderitems.getMenuStatus().equals(MENUSTATUS_DELIVERED_CODE)){
             holder.menuStatusColor.setBackgroundColor(context.getResources().getColor(R.color.green1));
+        }else if(orderitems.getMenuStatus().equals(MENUSTATUS_NOTCONFIRM_CODE)){
+            holder.menuStatusColor.setBackgroundColor(context.getResources().getColor(R.color.fbutton_color_wet_asphalt));
         }
 
         holder.item.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +127,13 @@ public class KitchenStatusAdapter extends RecyclerView.Adapter<KitchenStatusAdap
                     listener.onItemClick(orderitems, holder.getAdapterPosition());
             }
         });
+
+//        holder.item.setOnDragListener(new View.OnDragListener() {
+//            @Override
+//            public boolean onDrag(View view, DragEvent dragEvent) {
+//                return false;
+//            }
+//        });
     }
 
     @Override

@@ -193,8 +193,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
             @Override
             public void onResponse(Call<MenuPostResponse> call, Response<MenuPostResponse> response) {
 
-                Toast.makeText(activity.getApplicationContext(), String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
-
                 if (201 == response.code()) {
 
                     final MenuPostResponse postResponse = response.body();

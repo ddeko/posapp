@@ -16,6 +16,7 @@ import java.util.List;
 import mamabe.posappandroid.Activities.KitchenActivity;
 import mamabe.posappandroid.Adapter.KitchenStatusAdapter;
 import mamabe.posappandroid.Callbacks.OnActionbarListener;
+import mamabe.posappandroid.Fragments.Dialogs.OptionDialog;
 import mamabe.posappandroid.Models.OrderDetail;
 import mamabe.posappandroid.Models.OrderTableResponse;
 import mamabe.posappandroid.R;
@@ -27,13 +28,18 @@ import retrofit2.Response;
  * Created by DedeEko on 7/10/2017.
  */
 
-public class WaiterStationFragment extends BaseFragment  implements KitchenStatusAdapter.KitchenStatusAdapterListener{
+public class WaiterStationFragment extends BaseFragment  implements KitchenStatusAdapter.KitchenStatusAdapterListener,OptionDialog.OptionDialogListener{
 
+    public static final String MENUSTATUS_NOTCONFIRM_CODE = "101";
+    public static final String MENUSTATUS_CONFIRMATION_CODE = "1";
+    public static final String MENUSTATUS_COOKING_CODE = "2";
     public static final String MENUSTATUS_COOKED_CODE = "3";
     public static final String MENUSTATUS_DELIVERING_CODE = "4";
     public static final String MENUSTATUS_DELIVERED_CODE = "5";
 
     KitchenActivity activity;
+
+    OptionDialog optionDialog;
 
     private KitchenStatusAdapter confirmAdapter, cookingAdapter;
 
@@ -120,11 +126,6 @@ public class WaiterStationFragment extends BaseFragment  implements KitchenStatu
         return R.layout.fragment_waiter_station;
     }
 
-    @Override
-    public void onItemClick(OrderDetail item, int position) {
-
-    }
-
     public void fetchData(){
         fetchConfirmation(MENUSTATUS_COOKED_CODE);
         fetchConfirmation(MENUSTATUS_DELIVERING_CODE);
@@ -178,4 +179,54 @@ public class WaiterStationFragment extends BaseFragment  implements KitchenStatu
         });
 
     }
+
+    @Override
+    public void onItemClick(OrderDetail item, int position) {
+        optionDialog = new OptionDialog(true, this, item);
+        optionDialog.setTitleAndComment("Change Status");
+        optionDialog.show(activity.getSupportFragmentManager(), null);
+
+    }
+
+    @Override
+    public void onOptionClick(String id, OrderDetail item) {
+        OrderDetail orderDetail = new OrderDetail();
+
+        orderDetail.setOrderDetailId(item.getOrderDetailId());
+        orderDetail.setMenuStatus(id);
+
+        activity.showLoading(true);
+        Call<OrderTableResponse> call = null;
+
+        call = activity.api.updateStatusMenu(orderDetail);
+        call.enqueue(new Callback<OrderTableResponse>() {
+            @Override
+            public void onResponse(Call<OrderTableResponse> call, Response<OrderTableResponse> response) {
+
+                if (201 == response.code()) {
+
+                    final OrderTableResponse postResponse = response.body();
+
+                    Log.d("KitchenStation", "response = " + new Gson().toJson(postResponse));
+
+                    fetchData();
+                    activity.showLoading(false);
+
+
+                } else {
+                    Toast.makeText(activity.getApplicationContext(), "Cannot update status", Toast.LENGTH_SHORT).show();
+                    activity.showLoading(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrderTableResponse> call, Throwable t) {
+                Toast.makeText(activity.getApplicationContext(), "Failed update status", Toast.LENGTH_SHORT).show();
+                activity.showLoading(false);
+            }
+
+        });
+    }
+
+
 }

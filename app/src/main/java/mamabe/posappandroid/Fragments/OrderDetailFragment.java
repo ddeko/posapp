@@ -35,6 +35,7 @@ import mamabe.posappandroid.Activities.OrderActivity;
 import mamabe.posappandroid.Adapter.OrderDetailAdapter;
 import mamabe.posappandroid.Application.Config;
 import mamabe.posappandroid.Callbacks.OnActionbarListener;
+import mamabe.posappandroid.Fragments.Dialogs.ConfirmDialog;
 import mamabe.posappandroid.Models.OrderBody;
 import mamabe.posappandroid.Models.OrderDetail;
 import mamabe.posappandroid.Models.OrderTableResponse;
@@ -47,9 +48,12 @@ import retrofit2.Response;
  * Created by DedeEko on 6/19/2017.
  */
 
-public class OrderDetailFragment extends BaseFragment implements View.OnClickListener, OrderDetailAdapter.OrderDetailAdapterListener {
+public class OrderDetailFragment extends BaseFragment implements View.OnClickListener, OrderDetailAdapter.OrderDetailAdapterListener,ConfirmDialog.ConfirmDialogListener {
 
     private static final int ADDORDER_REQUEST_CODE = 2;
+
+    public static final String MENUSTATUS_NOTCONFIRM_CODE = "101";
+    private static final String DELETE_ORDER_CODE = "401";
 
     private OrderActivity activity;
 
@@ -79,6 +83,8 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
 
     DecimalFormatSymbols symbols;
     DecimalFormat decimalFormat;
+
+    ConfirmDialog confirmDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -323,7 +329,12 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     public void onItemClick(OrderDetail item, int position) {
-
+        if(item.getMenuStatus().equalsIgnoreCase(MENUSTATUS_NOTCONFIRM_CODE)) {
+            confirmDialog = new ConfirmDialog(true, this, item.getOrderDetailId());
+            confirmDialog.setButtonsCaption("No", "Yes");
+            confirmDialog.setTitleAndComment("Delete Order", "Do you want to delete this order ?");
+            confirmDialog.show(activity.getSupportFragmentManager(), null);
+        }
     }
 
     @Override
@@ -345,5 +356,49 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
                 }
             }
         }
+    }
+
+    @Override
+    public void onYesClick() {
+        OrderDetail orderDetail = new OrderDetail();
+
+        orderDetail.setOrderDetailId(confirmDialog.getArgs());
+        orderDetail.setMenuStatus(DELETE_ORDER_CODE);
+
+        activity.showLoading(true);
+        Call<OrderTableResponse> call = null;
+
+        call = activity.api.updateStatusMenu(orderDetail);
+        call.enqueue(new Callback<OrderTableResponse>() {
+            @Override
+            public void onResponse(Call<OrderTableResponse> call, Response<OrderTableResponse> response) {
+
+                if (201 == response.code()) {
+
+                    final OrderTableResponse postResponse = response.body();
+
+                    Log.d("KitchenStation", "response = " + new Gson().toJson(postResponse));
+
+                    activity.showLoading(false);
+
+
+                } else {
+                    Toast.makeText(activity.getApplicationContext(), "Cannot update status", Toast.LENGTH_SHORT).show();
+                    activity.showLoading(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrderTableResponse> call, Throwable t) {
+                Toast.makeText(activity.getApplicationContext(), "Failed update status", Toast.LENGTH_SHORT).show();
+                activity.showLoading(false);
+            }
+
+        });
+    }
+
+    @Override
+    public void onNoClick() {
+        confirmDialog.dismiss();
     }
 }

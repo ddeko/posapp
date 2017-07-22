@@ -11,6 +11,7 @@ import mamabe.posappandroid.Models.MenuCategoryResponse;
 import mamabe.posappandroid.Models.MenuPostResponse;
 import mamabe.posappandroid.Models.MenuResponse;
 import mamabe.posappandroid.Models.OrderBody;
+import mamabe.posappandroid.Models.OrderDetail;
 import mamabe.posappandroid.Models.OrderDetailBody;
 import mamabe.posappandroid.Models.OrderDetailPostResponse;
 import mamabe.posappandroid.Models.OrderPostResponse;
@@ -121,5 +122,9 @@ public interface API {
     @GET("getOrderDetailbyStatus")
     Call<OrderTableResponse>
     getOrderDetailbyStatus(@Query("menu_status") String menu_status);
+
+    @POST("updateStatus")
+    Call<OrderTableResponse>
+    updateStatusMenu(@Body OrderDetail orderBody);
 
 }

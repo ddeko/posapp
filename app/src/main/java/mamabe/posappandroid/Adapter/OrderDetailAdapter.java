@@ -28,6 +28,7 @@ import mamabe.posappandroid.R;
 
 public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.ViewHolder>{
 
+    public static final String MENUSTATUS_NOTCONFIRM_CODE = "101";
     public static final String MENUSTATUS_CONFIRMATION_CODE = "1";
     public static final String MENUSTATUS_COOKING_CODE = "2";
     public static final String MENUSTATUS_COOKED_CODE = "3";
@@ -175,6 +176,8 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
             holder.menuStatusColor.setBackgroundColor(context.getResources().getColor(R.color.yellow1));
         }else if(orderitems.getMenuStatus().equals(MENUSTATUS_DELIVERED_CODE)){
             holder.menuStatusColor.setBackgroundColor(context.getResources().getColor(R.color.green1));
+        }else if(orderitems.getMenuStatus().equals(MENUSTATUS_NOTCONFIRM_CODE)){
+            holder.menuStatusColor.setBackgroundColor(context.getResources().getColor(R.color.fbutton_color_wet_asphalt));
         }
 
         holder.item.setOnClickListener(new View.OnClickListener() {

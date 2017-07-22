@@ -35,6 +35,7 @@ public class ConfirmDialog extends DialogFragment {
     }
 
     ConfirmDialogListener listener;
+    String args;
 
     public ConfirmDialog() {
         super();
@@ -47,6 +48,14 @@ public class ConfirmDialog extends DialogFragment {
         this.listener = listener;
     }
 
+    public ConfirmDialog(boolean cancelOnTouchOutside, ConfirmDialogListener listener, String args) {
+        this.leftButtonCaption = "No";
+        this.rightButtonCaption = "Yes";
+        this.cancelOnTouchOutside = cancelOnTouchOutside;
+        this.listener = listener;
+        this.args = args;
+    }
+
     public void setTitleAndComment(String title, String comment) {
         this.alertTitle = title;
         this.alertComment = comment;
@@ -55,6 +64,10 @@ public class ConfirmDialog extends DialogFragment {
     public void setButtonsCaption(String leftButton, String rightButton) {
         this.leftButtonCaption = leftButton;
         this.rightButtonCaption = rightButton;
+    }
+
+    public String getArgs(){
+        return args;
     }
 
     @NonNull

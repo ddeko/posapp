@@ -29,15 +29,15 @@
         android:id="@+id/list_menu_text_disc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
         android:text="Disc"
         android:textColor="@color/brown"
         android:textSize="12sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/list_menu_disc"
         app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/imageView16"
-        android:layout_marginTop="0dp"
-        android:layout_marginRight="0dp" />
+        app:layout_constraintTop_toTopOf="@+id/list_menu_disc" />
 
     <TextView
         android:id="@+id/list_menu_disc"
@@ -58,27 +58,27 @@
         android:id="@+id/list_menu_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
         android:layout_marginTop="3dp"
         android:text="10000"
         android:textColor="@color/brown"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list_menu_name"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="0dp" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_menu_name" />
 
     <TextView
         android:id="@+id/list_menu_disc_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
         android:layout_marginLeft="4dp"
         android:layout_marginTop="3dp"
         android:text="10000"
         android:textColor="@color/nav_line"
         android:visibility="gone"
-        app:layout_constraintLeft_toRightOf="@+id/list_menu_price"
-        app:layout_constraintTop_toBottomOf="@+id/list_menu_name"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="0dp" />
+        app:layout_constraintLeft_toRightOf="@+id/list_menu_price"
+        app:layout_constraintTop_toBottomOf="@+id/list_menu_name" />
 
     <ImageView
         android:id="@+id/imageView16"

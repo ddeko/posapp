@@ -27,8 +27,8 @@ public class KitchenActivity extends BaseActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
-    KitchenStationFragment kitchenStationFragment;
-    WaiterStationFragment waiterStationFragment;
+    public KitchenStationFragment kitchenStationFragment;
+    public WaiterStationFragment waiterStationFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

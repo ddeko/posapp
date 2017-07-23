@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list_order_detail_item"
+    android:id="@+id/list_checkout_detail_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:foreground="?android:attr/selectableItemBackground"
@@ -24,7 +24,7 @@
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintHorizontal_weight="0.95"
             card_view:layout_constraintLeft_toLeftOf="parent"
-            card_view:layout_constraintRight_toLeftOf="@+id/order_detail_item_status_color"
+            card_view:layout_constraintRight_toLeftOf="@+id/checkout_detail_item_status_color"
             card_view:layout_constraintTop_toTopOf="parent"
             card_view:layout_constraintVertical_bias="1.0">
 
@@ -39,7 +39,7 @@
                 card_view:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/order_detail_item_additional"
+                    android:id="@+id/checkout_detail_item_additional"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingRight="4dp"
@@ -49,7 +49,7 @@
                     android:textStyle="bold|italic" />
 
                 <TextView
-                    android:id="@+id/order_detail_item_takeaway"
+                    android:id="@+id/checkout_detail_item_takeaway"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="*)take away"
@@ -61,7 +61,7 @@
 
 
             <TextView
-                android:id="@+id/order_detail_item_name"
+                android:id="@+id/checkout_detail_item_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="25dp"
@@ -78,26 +78,26 @@
                 card_view:layout_constraintTop_toBottomOf="@+id/linearLayout7" />
 
             <TextView
-                android:id="@+id/order_detail_item_price"
+                android:id="@+id/checkout_detail_item_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rp 22,500.00"
                 android:textColor="@color/brown"
                 android:textSize="12sp"
-                card_view:layout_constraintLeft_toLeftOf="@+id/order_detail_item_name"
-                card_view:layout_constraintTop_toBottomOf="@+id/order_detail_item_name" />
+                card_view:layout_constraintLeft_toLeftOf="@+id/checkout_detail_item_name"
+                card_view:layout_constraintTop_toBottomOf="@+id/checkout_detail_item_name" />
 
             <LinearLayout
-                android:id="@+id/order_detail_disc_holder"
+                android:id="@+id/checkout_detail_disc_holder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingBottom="2dp"
-                card_view:layout_constraintLeft_toLeftOf="@+id/order_detail_item_price"
-                card_view:layout_constraintTop_toBottomOf="@+id/order_detail_item_price">
+                card_view:layout_constraintLeft_toLeftOf="@+id/checkout_detail_item_price"
+                card_view:layout_constraintTop_toBottomOf="@+id/checkout_detail_item_price">
 
                 <TextView
-                    android:id="@+id/order_detail_item_disc_price"
+                    android:id="@+id/checkout_detail_item_disc_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -106,7 +106,7 @@
                     android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/order_detail_item_disc"
+                    android:id="@+id/checkout_detail_item_disc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -117,7 +117,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/order_detail_item_count"
+                android:id="@+id/checkout_detail_item_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -126,8 +126,8 @@
                 android:text="X 2"
                 android:textColor="@color/brown"
                 android:textSize="12sp"
-                card_view:layout_constraintLeft_toRightOf="@+id/order_detail_item_price"
-                card_view:layout_constraintTop_toTopOf="@+id/order_detail_item_price" />
+                card_view:layout_constraintLeft_toRightOf="@+id/checkout_detail_item_price"
+                card_view:layout_constraintTop_toTopOf="@+id/checkout_detail_item_price" />
 
             <TextView
                 android:id="@+id/textView40"
@@ -139,14 +139,14 @@
                 android:text="Total(Rp)"
                 android:textColor="@color/brown"
                 android:textSize="12sp"
-                card_view:layout_constraintBottom_toTopOf="@+id/order_detail_item_total_price"
+                card_view:layout_constraintBottom_toTopOf="@+id/checkout_detail_item_total_price"
                 card_view:layout_constraintRight_toRightOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent"
                 card_view:layout_constraintVertical_bias="0.52"
                 card_view:layout_constraintVertical_chainStyle="packed" />
 
             <TextView
-                android:id="@+id/order_detail_item_total_price"
+                android:id="@+id/checkout_detail_item_total_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right|center_vertical"
@@ -154,19 +154,19 @@
                 android:textColor="@color/brown"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                card_view:layout_constraintBottom_toTopOf="@+id/order_detail_item_note_holder"
+                card_view:layout_constraintBottom_toTopOf="@+id/checkout_detail_item_note_holder"
                 card_view:layout_constraintRight_toRightOf="@+id/textView40"
                 card_view:layout_constraintTop_toBottomOf="@+id/textView40" />
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/order_detail_item_note_holder"
+                android:id="@+id/checkout_detail_item_note_holder"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:layout_marginRight="5dp"
                 card_view:layout_constraintLeft_toLeftOf="parent"
                 card_view:layout_constraintRight_toRightOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/order_detail_disc_holder">
+                card_view:layout_constraintTop_toBottomOf="@+id/checkout_detail_disc_holder">
 
 
                 <LinearLayout
@@ -179,44 +179,12 @@
                     card_view:layout_constraintRight_toRightOf="parent"
                     card_view:layout_constraintTop_toTopOf="parent"></LinearLayout>
 
-                <TextView
-                    android:id="@+id/textView36"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginStart="4dp"
-                    android:text="note :"
-                    android:textColor="@color/brown"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    card_view:layout_constraintLeft_toLeftOf="parent"
-                    card_view:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
-                <TextView
-                    android:id="@+id/order_detail_item_note"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_marginStart="4dp"
-                    android:ellipsize="marquee"
-                    android:padding="2dp"
-                    android:singleLine="true"
-                    android:text="White Cream, Less Sugar"
-                    android:textColor="@color/brown"
-                    android:textSize="11sp"
-                    card_view:layout_constraintHorizontal_bias="0.0"
-                    card_view:layout_constraintLeft_toRightOf="@+id/textView36"
-                    card_view:layout_constraintRight_toRightOf="parent"
-                    card_view:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
             </android.support.constraint.ConstraintLayout>
 
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/order_detail_item_status_color"
+            android:id="@+id/checkout_detail_item_status_color"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/red2"

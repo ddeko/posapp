@@ -21,6 +21,8 @@ import mamabe.posappandroid.Models.RoleResponse;
 import mamabe.posappandroid.Models.Setting;
 import mamabe.posappandroid.Models.SettingPostResponse;
 import mamabe.posappandroid.Models.SettingResponse;
+import mamabe.posappandroid.Models.TransBody;
+import mamabe.posappandroid.Models.TransPostResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.http.Body;
@@ -126,5 +128,13 @@ public interface API {
     @POST("updateStatus")
     Call<OrderTableResponse>
     updateStatusMenu(@Body OrderDetail orderBody);
+
+    @POST("insertTrans")
+    Call<TransPostResponse>
+    insertTransaction(@Body TransBody transBody);
+
+    @POST("updateStatusOrder")
+    Call<TransPostResponse>
+    updateStatusOrder(@Body TransBody transBody);
 
 }

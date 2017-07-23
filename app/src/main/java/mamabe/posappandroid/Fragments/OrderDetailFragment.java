@@ -57,6 +57,8 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
 
     private OrderActivity activity;
 
+    private CheckoutDetailFragment checkoutDetailFragment;
+
     private OrderDetailAdapter adapter;
 
     private RecyclerView listOrderItem;
@@ -130,6 +132,7 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
         btnCheckOut = (Button)view.findViewById(R.id.order_detail_btn_checkout);
 
         btnAddOrder.setOnClickListener(this);
+        btnCheckOut.setOnClickListener(this);
 
         listOrderItem.setHasFixedSize(false);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity().getApplicationContext());
@@ -249,6 +252,28 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
 
             }
         }
+        else if(view==btnCheckOut)
+        {
+            if(orderBody.getOrder_id()==null)
+            {
+                Toast.makeText(activity, "Please input order first.", Toast.LENGTH_SHORT).show();
+            }else {
+                checkoutDetailFragment = new CheckoutDetailFragment();
+
+                Bundle b = new Bundle();
+
+                if (orderBody != null) {
+                    b.putSerializable("orderBody", orderBody);
+                    Log.e("orderBody", "is valid");
+                } else {
+                    Log.e("orderBody", "is null");
+                }
+
+                checkoutDetailFragment.setArguments(b);
+
+                replaceFragment(R.id.fragment_container, checkoutDetailFragment, true);
+            }
+        }
 
     }
 
@@ -311,7 +336,7 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
                     adapter.notifyDataSetChanged();
                     subTotals = decimalFormat.format(total);
                     tvSubTotal.setText(subTotals);
-                    tvTotalItem.setText(String.valueOf(adapter.getItemCount()));
+                    tvTotalItem.setText(String.valueOf(adapter.getItemCount())+" Items");
                 } else {
                     Toast.makeText(activity.getApplicationContext(), "Cannot fetching data.", Toast.LENGTH_SHORT).show();
                     activity.showLoading(false);

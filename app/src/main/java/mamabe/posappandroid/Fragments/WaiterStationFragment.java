@@ -210,6 +210,7 @@ public class WaiterStationFragment extends BaseFragment  implements KitchenStatu
                     Log.d("KitchenStation", "response = " + new Gson().toJson(postResponse));
 
                     fetchData();
+                    activity.kitchenStationFragment.notifyKitchen();
                     activity.showLoading(false);
 
 
@@ -228,5 +229,8 @@ public class WaiterStationFragment extends BaseFragment  implements KitchenStatu
         });
     }
 
+    public void notifyWaiter(){
+        fetchData();
+    }
 
 }

@@ -11,6 +11,7 @@ import mamabe.posappandroid.Models.MenuCategoryResponse;
 import mamabe.posappandroid.Models.MenuPostResponse;
 import mamabe.posappandroid.Models.MenuResponse;
 import mamabe.posappandroid.Models.OrderBody;
+import mamabe.posappandroid.Models.OrderBodyResponse;
 import mamabe.posappandroid.Models.OrderDetail;
 import mamabe.posappandroid.Models.OrderDetailBody;
 import mamabe.posappandroid.Models.OrderDetailPostResponse;
@@ -23,6 +24,7 @@ import mamabe.posappandroid.Models.SettingPostResponse;
 import mamabe.posappandroid.Models.SettingResponse;
 import mamabe.posappandroid.Models.TransBody;
 import mamabe.posappandroid.Models.TransPostResponse;
+import mamabe.posappandroid.Models.TransactionResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.http.Body;
@@ -137,4 +139,26 @@ public interface API {
     Call<TransPostResponse>
     updateStatusOrder(@Body TransBody transBody);
 
+    @GET("getReport")
+    Call<TransactionResponse>
+    getReport(@Query("bulan") String bulan,
+              @Query("tahun") String tahun);
+
+    @GET("getReportDaily")
+    Call<TransactionResponse>
+    getReportDaily(@Query("tgl") String tgl,
+                   @Query("bulan") String bulan,
+                   @Query("tahun") String tahun);
+
+    @GET("getOrderById")
+    Call<OrderBodyResponse>
+    getOrderById(@Query("order_id") String order_id);
+
+    @GET("getTransDetail")
+    Call<TransactionResponse>
+    getTransDetail(@Query("trans_id") String trans_id);
+
+    @POST("login")
+    Call<EmployeeResponse>
+    login(@Body EmployeeBody employeeBody);
 }

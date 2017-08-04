@@ -46,7 +46,13 @@
             android:label="@string/title_activity_add_order"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Activities.KitchenActivity"></activity>
+        <activity
+            android:name=".Activities.KitchenActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.ReportActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activities.ReportDetailActivity"></activity>
     </application>
 
 </manifest>

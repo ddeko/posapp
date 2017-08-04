@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list_report_detail_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardBackgroundColor="@color/softbrownARGB"
+    card_view:cardCornerRadius="2dp"
+    card_view:cardUseCompatPadding="true">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/softbrownARGB"
+            android:padding="7dp"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintHorizontal_weight="0.95"
+            card_view:layout_constraintLeft_toLeftOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:layout_constraintVertical_bias="0.0"
+            android:layout_marginRight="0dp"
+            card_view:layout_constraintRight_toRightOf="parent">
+
+            <TextView
+                android:id="@+id/textView46"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:gravity="right|center_vertical"
+                android:text="Total(Rp)"
+                android:textColor="@color/brown"
+                android:textSize="12sp"
+                card_view:layout_constraintBottom_toTopOf="@+id/checkout_detail_item_total_price"
+                card_view:layout_constraintRight_toRightOf="parent"
+                card_view:layout_constraintVertical_bias="0.52"
+                card_view:layout_constraintVertical_chainStyle="packed"
+                android:layout_marginTop="0dp"
+                card_view:layout_constraintTop_toBottomOf="@+id/report_detail_guest_name" />
+
+            <TextView
+                android:id="@+id/report_detail_total_payed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="0dp"
+                android:gravity="right|center_vertical"
+                android:text="45.000,00"
+                android:textColor="@color/brown"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                card_view:layout_constraintBottom_toTopOf="@+id/report_detail_item_note_holder"
+                card_view:layout_constraintRight_toRightOf="@+id/textView46"
+                card_view:layout_constraintTop_toBottomOf="@+id/textView46" />
+
+            <TextView
+                android:id="@+id/textView44"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Item Ordered : "
+                android:textColor="@color/brown"
+                android:textSize="12sp"
+                card_view:layout_constraintLeft_toLeftOf="@+id/ttextView7"
+                card_view:layout_constraintTop_toBottomOf="@+id/report_detail_item_price" />
+
+            <TextView
+                android:id="@+id/report_detail_total_item_ordered"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="0dp"
+                android:gravity="center"
+                android:text="9"
+                android:textColor="@color/brown"
+                android:textSize="12sp"
+                card_view:layout_constraintLeft_toRightOf="@+id/textView44"
+                card_view:layout_constraintTop_toTopOf="@+id/textView44" />
+
+            <TextView
+                android:id="@+id/report_detail_trans_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="January 21, 2016 02:57 PM"
+                android:textColor="@color/actionbar_color"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                card_view:layout_constraintRight_toRightOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="0dp" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal"
+                card_view:layout_constraintLeft_toLeftOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/report_detail_item_takeaway"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="*)take away"
+                    android:textColor="@color/brown"
+                    android:textSize="10sp"
+                    android:textStyle="bold|italic" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/report_detail_guest_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="25dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:text="Johnny"
+                android:textColor="@color/actionbar_dark_color"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                card_view:layout_constraintLeft_toRightOf="@+id/ttextView7"
+                card_view:layout_constraintRight_toRightOf="parent"
+                card_view:layout_constraintTop_toTopOf="@+id/ttextView7" />
+
+            <TextView
+                android:id="@+id/ttextView7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="25dp"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:text="Guest Name : "
+                android:textColor="@color/actionbar_dark_color"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                card_view:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="0dp"
+                card_view:layout_constraintTop_toBottomOf="@+id/report_detail_trans_date" />
+
+            <TextView
+                android:id="@+id/report_detail_item_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Total Guest : "
+                android:textColor="@color/brown"
+                android:textSize="12sp"
+                card_view:layout_constraintLeft_toLeftOf="@+id/ttextView7"
+                card_view:layout_constraintTop_toBottomOf="@+id/ttextView7" />
+
+            <TextView
+                android:id="@+id/report_detail_guest_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginStart="3dp"
+                android:gravity="center"
+                android:text="9"
+                android:textColor="@color/brown"
+                android:textSize="12sp"
+                card_view:layout_constraintLeft_toRightOf="@+id/report_detail_item_price"
+                card_view:layout_constraintTop_toTopOf="@+id/report_detail_item_price" />
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/report_detail_item_note_holder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                card_view:layout_constraintLeft_toLeftOf="parent"
+                card_view:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="5dp"
+                card_view:layout_constraintTop_toBottomOf="@+id/textView44">
+
+
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/actionbar_color"
+                    android:orientation="horizontal"
+                    card_view:layout_constraintLeft_toLeftOf="parent"
+                    card_view:layout_constraintRight_toRightOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent"></LinearLayout>
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

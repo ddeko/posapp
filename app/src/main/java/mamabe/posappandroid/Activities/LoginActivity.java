@@ -14,6 +14,9 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+import mamabe.posappandroid.Models.Employee;
+import mamabe.posappandroid.Models.EmployeeBody;
+import mamabe.posappandroid.Models.EmployeeResponse;
 import mamabe.posappandroid.Models.Setting;
 import mamabe.posappandroid.Models.SettingResponse;
 import mamabe.posappandroid.Preferences.SessionManager;
@@ -29,11 +32,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private RoundedImage cropCircle;
 
     private EditText EdUsername;
+    private EditText EdPass;
     private LinearLayout BtnLogin;
 
     private ArrayList<Setting> listSetting;
 
     SessionManager sessions;
+
+    Employee employee;
 
 
     @Override
@@ -48,9 +54,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     public void onClick(View v) {
         if(v==BtnLogin)
         {
-            Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-            startActivity(i);
-            fetchData();
+            login(EdUsername.getText().toString(),EdPass.getText().toString());
+
+
 
         }
     }
@@ -58,6 +64,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     @Override
     public void initView() {
         EdUsername = (EditText) findViewById(R.id.et_user);
+        EdPass = (EditText) findViewById(R.id.et_pass);
         BtnLogin = (LinearLayout)findViewById(R.id.btn_login);
 
         BtnLogin.setOnClickListener(this);
@@ -109,6 +116,67 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
             @Override
             public void onFailure(Call<SettingResponse> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Fail to fetching data.", Toast.LENGTH_SHORT).show();
+                Log.d("UserFragment", t.getMessage()+t.getLocalizedMessage());
+                showLoading(false);
+            }
+        });
+    }
+
+    public void login(String user, String pass){
+        showLoading(true);
+        Call<EmployeeResponse> call = null;
+        EmployeeBody emp = new EmployeeBody();
+
+        emp.setUsername(user);
+        emp.setPassword(pass);
+        call = api.login(emp);
+
+        call.enqueue(new Callback<EmployeeResponse>() {
+            @Override
+            public void onResponse(Call<EmployeeResponse> call, Response<EmployeeResponse> response) {
+
+                if (2 == response.code() / 100) {
+
+                    final EmployeeResponse employeeResponse = response.body();
+                    Log.d("UserFragment", "response = " + new Gson().toJson(employeeResponse));
+
+                    if(employeeResponse.getStatus().toString().equalsIgnoreCase("0"))
+                    {
+                        Toast.makeText(LoginActivity.this, "Username or Password Incorrect", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        employee = employeeResponse.getEmployee().get(0);
+                        sessions.createLoginSession(employee);
+                        fetchData();
+                        if(employee.getRoleName().equalsIgnoreCase("admin")){
+                            Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                            startActivity(i);
+                        }
+                        else if(employee.getRoleName().equalsIgnoreCase("waiter")){
+                            Intent i = new Intent(LoginActivity.this, OrderActivity.class);
+                            startActivity(i);
+                        }
+                        else if(employee.getRoleName().equalsIgnoreCase("cook")){
+                            Intent i = new Intent(LoginActivity.this, KitchenActivity.class);
+                            startActivity(i);
+                        }
+                        EdPass.setText("");
+                        EdUsername.setText("");
+                    }
+
+
+                    showLoading(false);
+
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Cannot fetching data.", Toast.LENGTH_SHORT).show();
+                    showLoading(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EmployeeResponse> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Fail to fetching data.", Toast.LENGTH_SHORT).show();
                 Log.d("UserFragment", t.getMessage()+t.getLocalizedMessage());
                 showLoading(false);

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import mamabe.posappandroid.Activities.KitchenActivity;
@@ -19,6 +20,7 @@ import mamabe.posappandroid.Callbacks.OnActionbarListener;
 import mamabe.posappandroid.Fragments.Dialogs.OptionDialog;
 import mamabe.posappandroid.Models.OrderDetail;
 import mamabe.posappandroid.Models.OrderTableResponse;
+import mamabe.posappandroid.Preferences.SessionManager;
 import mamabe.posappandroid.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,6 +47,10 @@ public class KitchenStationFragment extends BaseFragment implements KitchenStatu
 
     private RecyclerView listStatusConfirm, listStatusCooking;
 
+    SessionManager sessions;
+
+    private HashMap<String,String> userData;
+
 
     public ArrayList<OrderDetail> confirmItems, cookingItems;
 
@@ -60,6 +66,8 @@ public class KitchenStationFragment extends BaseFragment implements KitchenStatu
         confirmAdapter = new KitchenStatusAdapter(confirmItems, this, activity.getApplicationContext());
         cookingAdapter = new KitchenStatusAdapter(cookingItems, this, activity.getApplicationContext());
 
+        sessions = new SessionManager(getBaseActivity());
+        userData = sessions.getUserDetails();
     }
 
     private void setupActionBar() {
@@ -95,7 +103,13 @@ public class KitchenStationFragment extends BaseFragment implements KitchenStatu
         getBaseActivity().setActionbarListener(new OnActionbarListener() {
             @Override
             public void onLeftIconClick() {
-                getActivity().onBackPressed();
+                if(userData.get(SessionManager.KEY_ROLENAME).equalsIgnoreCase("admin"))
+                {
+                    getActivity().onBackPressed();
+                }
+                else{
+                    activity.finish();
+                }
             }
 
             @Override

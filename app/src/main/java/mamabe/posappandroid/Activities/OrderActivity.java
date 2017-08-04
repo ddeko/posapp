@@ -2,10 +2,14 @@ package mamabe.posappandroid.Activities;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
+
+import java.util.HashMap;
 
 import mamabe.posappandroid.Callbacks.OnActionbarListener;
 import mamabe.posappandroid.Fragments.ListTableFragment;
 import mamabe.posappandroid.Fragments.UserFragment;
+import mamabe.posappandroid.Preferences.SessionManager;
 import mamabe.posappandroid.R;
 
 /**
@@ -15,6 +19,12 @@ import mamabe.posappandroid.R;
 public class OrderActivity  extends BaseActivity {
 
     ListTableFragment listTableFragment;
+
+    private TextView tvName, tvRole;
+
+    SessionManager sessions;
+
+    private HashMap<String,String> userData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +36,10 @@ public class OrderActivity  extends BaseActivity {
 
         listTableFragment = new ListTableFragment();
 
+        sessions = new SessionManager(this);
+
+        userData = sessions.getUserDetails();
+
         replaceFragment(R.id.fragment_container, listTableFragment, false);
     }
 
@@ -36,6 +50,8 @@ public class OrderActivity  extends BaseActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
+        tvName = (TextView) findViewById(R.id.tv_name);
+        tvRole = (TextView) findViewById(R.id.tv_role);
         showLoading(false);
     }
 
@@ -44,7 +60,13 @@ public class OrderActivity  extends BaseActivity {
         setActionbarListener(new OnActionbarListener() {
             @Override
             public void onLeftIconClick() {
-                onBackPressed();
+                if(userData.get(SessionManager.KEY_ROLENAME).equalsIgnoreCase("admin"))
+                {
+                    onBackPressed();
+                }
+                else{
+                    finish();
+                }
 
             }
 
@@ -62,7 +84,10 @@ public class OrderActivity  extends BaseActivity {
 
     @Override
     public void updateUI() {
+        userData = sessions.getUserDetails();
 
+        tvName.setText(userData.get(SessionManager.KEY_EMPNAME));
+        tvRole.setText(userData.get(SessionManager.KEY_ROLENAME));
     }
 
     @Override
@@ -70,4 +95,5 @@ public class OrderActivity  extends BaseActivity {
         super.onStart();
         listTableFragment.run();
     }
+
 }

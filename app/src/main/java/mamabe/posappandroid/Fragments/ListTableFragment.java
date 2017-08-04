@@ -53,6 +53,8 @@ public class ListTableFragment extends BaseFragment implements View.OnClickListe
 
     SessionManager sessions;
 
+    private HashMap<String,String> userData;
+
     private HashMap<String,String> settingData;
 
     @Override
@@ -66,7 +68,7 @@ public class ListTableFragment extends BaseFragment implements View.OnClickListe
         adapter = new ListTableAdapter(tableItems, this, activity.getApplicationContext());
 
         sessions = new SessionManager(getBaseActivity());
-
+        userData = sessions.getUserDetails();
     }
 
     private void setupActionBar() {
@@ -97,7 +99,13 @@ public class ListTableFragment extends BaseFragment implements View.OnClickListe
         getBaseActivity().setActionbarListener(new OnActionbarListener() {
             @Override
             public void onLeftIconClick() {
-                getActivity().onBackPressed();
+                if(userData.get(SessionManager.KEY_ROLENAME).equalsIgnoreCase("admin"))
+                {
+                    getActivity().onBackPressed();
+                }
+                else{
+                    activity.finish();
+                }
             }
 
             @Override
@@ -342,4 +350,6 @@ public class ListTableFragment extends BaseFragment implements View.OnClickListe
             }
         }
     }
+
+
 }

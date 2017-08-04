@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import mamabe.posappandroid.Callbacks.OnActionbarListener;
 import mamabe.posappandroid.R;
 
 public class SettingActivity extends BaseActivity implements View.OnClickListener{
@@ -39,7 +40,18 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void setUICallbacks() {
+        setActionbarListener(new OnActionbarListener() {
+            @Override
+            public void onLeftIconClick() {
+                onBackPressed();
 
+            }
+
+            @Override
+            public void onRightIconClick() {
+
+            }
+        });
     }
 
     @Override

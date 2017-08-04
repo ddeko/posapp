@@ -38,6 +38,7 @@ import mamabe.posappandroid.Callbacks.OnActionbarListener;
 import mamabe.posappandroid.Fragments.Dialogs.ConfirmDialog;
 import mamabe.posappandroid.Fragments.Dialogs.ConfirmationDialog;
 import mamabe.posappandroid.Models.OrderBody;
+import mamabe.posappandroid.Models.OrderBodyResponse;
 import mamabe.posappandroid.Models.OrderDetail;
 import mamabe.posappandroid.Models.OrderTableResponse;
 import mamabe.posappandroid.Models.TransBody;
@@ -355,7 +356,7 @@ public class CheckoutDetailFragment extends BaseFragment implements View.OnClick
 
 
 
-        datetime = String.valueOf(mYear)+"-"+ String.valueOf(mMonth) +"-"+String.valueOf(mDay) + " "
+        datetime = String.valueOf(mYear)+"-"+ String.valueOf(mMonth+1) +"-"+String.valueOf(mDay) + " "
                 + String.valueOf(hour) + ":" +String.valueOf(minute);
 
 
@@ -441,20 +442,42 @@ public class CheckoutDetailFragment extends BaseFragment implements View.OnClick
             getActivity().getFragmentManager().popBackStack();
         }
         else if(args.equalsIgnoreCase("pay")){
-            TransBody transBody = new TransBody();
+            if(orderBody.getTakeaway().equalsIgnoreCase("0")){
+                TransBody transBody = new TransBody();
 
-            transBody.setOrder_id(orderBody.getOrder_id());
-            transBody.setOrder_status("paid");
-            transBody.setCash(String.valueOf(cash));
-            transBody.setChange(String.valueOf(change));
-            transBody.setSubtotal(String.valueOf(subtotals));
-            transBody.setTax(String.valueOf(tax));
-            transBody.setService(String.valueOf(serviceCharge));
-            transBody.setTotal(String.valueOf(totals));
-            transBody.setTrans_date(tvOrderDate.getText().toString());
+                transBody.setOrder_id(orderBody.getOrder_id());
+                transBody.setOrder_status("paid");
+                transBody.setCash(String.valueOf(cash));
+                transBody.setChange(String.valueOf(change));
+                transBody.setSubtotal(String.valueOf(subtotals));
+                transBody.setTax(String.valueOf(tax));
+                transBody.setService(String.valueOf(serviceCharge));
+                transBody.setTotal(String.valueOf(totals));
+                transBody.setTrans_date(tvOrderDate.getText().toString());
 
-            insertTransaction(transBody);
-            updateUI();
+                insertTransaction(transBody);
+            }
+            else{
+                TransBody transBody = new TransBody();
+
+                transBody.setOrder_id(orderBody.getOrder_id());
+                transBody.setOrder_status("finished");
+                transBody.setCash(String.valueOf(cash));
+                transBody.setChange(String.valueOf(change));
+                transBody.setSubtotal(String.valueOf(subtotals));
+                transBody.setTax(String.valueOf(tax));
+                transBody.setService(String.valueOf(serviceCharge));
+                transBody.setTotal(String.valueOf(totals));
+                transBody.setTrans_date(tvOrderDate.getText().toString());
+
+                insertTransaction(transBody);
+
+                getActivity().getFragmentManager().popBackStack();
+                getActivity().getFragmentManager().popBackStack();
+            }
+
+
+
         }
         else if(args.equalsIgnoreCase("status")){
 
@@ -540,7 +563,7 @@ public class CheckoutDetailFragment extends BaseFragment implements View.OnClick
 
                     orderBody.setOrder_status("paid");
                     activity.showLoading(false);
-
+                    updateOrder();
 
                 } else {
                     Toast.makeText(activity.getApplicationContext(), "Cannot insert data", Toast.LENGTH_SHORT).show();
@@ -622,6 +645,43 @@ public class CheckoutDetailFragment extends BaseFragment implements View.OnClick
                 activity.showLoading(false);
             }
 
+        });
+    }
+
+    public void updateOrder(){
+        activity.showLoading(true);
+
+        Call<OrderBodyResponse> call = null;
+
+        call = activity.api.getOrderById(orderBody.getOrder_id());
+
+        call.enqueue(new Callback<OrderBodyResponse>() {
+            @Override
+            public void onResponse(Call<OrderBodyResponse> call, Response<OrderBodyResponse> response) {
+
+                if (2 == response.code() / 100) {
+
+                    final OrderBodyResponse orderBodyResponse = response.body();
+                    Log.d("Order", "response = " + new Gson().toJson(orderBodyResponse));
+
+                    orderBody = orderBodyResponse.getOrder().get(0);
+
+
+                    activity.showLoading(false);
+
+                    updateUI();
+                } else {
+                    Toast.makeText(activity.getApplicationContext(), "Cannot fetching data.", Toast.LENGTH_SHORT).show();
+                    activity.showLoading(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrderBodyResponse> call, Throwable t) {
+                Toast.makeText(activity.getApplicationContext(), "Fail to fetching data.", Toast.LENGTH_SHORT).show();
+                Log.d("MenuFragment", t.getMessage()+t.getLocalizedMessage());
+                activity.showLoading(false);
+            }
         });
     }
 }

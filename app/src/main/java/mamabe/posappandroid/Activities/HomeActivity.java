@@ -7,7 +7,10 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.HashMap;
+
 import mamabe.posappandroid.Callbacks.OnActionbarListener;
+import mamabe.posappandroid.Preferences.SessionManager;
 import mamabe.posappandroid.R;
 
 /**
@@ -19,12 +22,20 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
     private RelativeLayout btnOrder, btnExpend, btnReport, btnSetting;
     private TextView tvName, tvRole;
 
+    SessionManager sessions;
+
+    private HashMap<String,String> userData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRightIcon(0);
         setLeftIcon(R.drawable.ic_exit_to_app_white_24dp);
         setActionBarTitleCenter("mamabe");
+
+
+        sessions = new SessionManager(this);
+
     }
 
     @Override
@@ -41,6 +52,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
 
         tvName = (TextView) findViewById(R.id.tv_name);
         tvRole = (TextView) findViewById(R.id.tv_role);
+
+
 
         btnExpend.setOnClickListener(this);
         btnOrder.setOnClickListener(this);
@@ -74,7 +87,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     public void updateUI() {
+        userData = sessions.getUserDetails();
 
+        tvName.setText(userData.get(SessionManager.KEY_EMPNAME));
+        tvRole.setText(userData.get(SessionManager.KEY_ROLENAME));
     }
 
     @Override
@@ -96,7 +112,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
         }
         else if(v ==btnReport)
         {
-
+            Intent i = new Intent(HomeActivity.this, ReportActivity.class);
+            startActivity(i);
         }
     }
 

@@ -293,7 +293,7 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
         String ms = String.valueOf(ss);
         String msSbtr = ms.substring(0,2);
 
-        datetime = String.valueOf(mYear)+"-"+ String.valueOf(mMonth) +"-"+String.valueOf(mDay) + " "
+        datetime = String.valueOf(mYear)+"-"+ String.valueOf(mMonth+1) +"-"+String.valueOf(mDay) + " "
                 + String.valueOf(hour) + ":" +String.valueOf(minute);
 
 
@@ -405,7 +405,7 @@ public class OrderDetailFragment extends BaseFragment implements View.OnClickLis
                     Log.d("KitchenStation", "response = " + new Gson().toJson(postResponse));
 
                     activity.showLoading(false);
-
+                    updateUI();
 
                 } else {
                     Toast.makeText(activity.getApplicationContext(), "Cannot update status", Toast.LENGTH_SHORT).show();
